@@ -1,10 +1,8 @@
 # TCC
-Pronto:
+-Pronto:
 
--Modelo Conceitual
+Modelo Conceitual
 
--Modelo Logico
+Modelo Logico
 
-Proximo passo:
-
--SQL
+SQL
