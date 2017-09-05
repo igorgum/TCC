@@ -1,2 +1,8 @@
 # TCC
-yeh
+-Pronto:
+
+Modelo Conceitual
+
+Modelo Logico
+
+SQL
