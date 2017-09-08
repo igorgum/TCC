@@ -119,3 +119,19 @@ CREATE TABLE Presenca_Prof(
 	FOREIGN KEY (Cd_Professor) REFERENCES Professor,
 	FOREIGN KEY (Numero) REFERENCES Sala
 );
+
+CREATE TABLE Funcao(
+	Cd_Funcao	CHAR(4) NOT NULL UNIQUE,
+	Funcao		CHAR(50),
+	
+	PRIMARY KEY (Cd_Funcao)
+);
+
+CREATE TABLE Func_Func(
+	Cd_Funcionario	CHAR(4) NOT NULL UNIQUE,
+	Cd_Funcao	CHAR(4) NOT NULL,
+
+	PRIMARY KEY (Cd_Funcionario, Cd_Funcao),
+	FOREIGN KEY (Cd_Funcionario) REFERENCES Funcionario,
+	FOREIGN KEY (Cd_Funcao) REFERENCES Funcao
+);
