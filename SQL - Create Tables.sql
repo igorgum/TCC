@@ -21,6 +21,7 @@ CREATE TABLE Professor(
 	Cd_Professor 	CHAR(4) NOT NULL UNIQUE,
 	Nm_Professor	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
+	Avatar		VARCHAR(255),
 
 	PRIMARY KEY (Cd_Professor)
 );
@@ -31,6 +32,7 @@ CREATE TABLE Aluno(
 	RA		CHAR(10) NOT NULL UNIQUE,
 	Email		VARCHAR(50),
 	Turma		DATE,
+	Avatar		VARCHAR(255),
 
 	PRIMARY KEY (Cd_Aluno)
 );
@@ -38,9 +40,10 @@ CREATE TABLE Aluno(
 CREATE TABLE Funcionario(
 	Cd_Funcionario	CHAR(4) NOT NULL UNIQUE,
 	Login		VARCHAR(25) UNIQUE,
-	Senha		VARCHAR(25),
+	Senha		VARCHAR(32),
 	Nm_Funcionario	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
+	Avatar		VARCHAR(255),
 
 	PRIMARY KEY (Cd_Funcionario)
 );
