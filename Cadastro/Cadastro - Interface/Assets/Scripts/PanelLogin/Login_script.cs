@@ -7,7 +7,7 @@ public class Login_script : MonoBehaviour {
 
 	public GameObject painelPrincipal;
 	public GameObject painelLogin;
-	public Text statusLogin;
+	public Text statusLogin, conectadoComo;
 	public InputField isLoginOk; //campo login, se tiver vazio dá erro
 	public InputField isSenhaOk; //campo senha, se tiver vazio dá erro
 
@@ -18,9 +18,15 @@ public class Login_script : MonoBehaviour {
 	public void Logar() {
 		if (isLoginOk.text != "") {
 			if (isSenhaOk.text != "") {
+
+				//usuario conectado como x ("isLoginOk" é p/ debug, dps vc pega o NOME no banco de dados)
+				conectadoComo.text = "Usuário conectado como " + isLoginOk.text;
+
+				//limpando/ativando telas
 				statusLogin.text = "";
 				painelLogin.SetActive (false);
 				painelPrincipal.SetActive(true);
+
 			} else {
 				statusLogin.text = "Erro: O campo senha está vazio";
 				//ou:

@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Avatar_script.cs" />
      <Compile Include="Assets\Scripts\Inicializar_script.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\LoginInputField_script.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\Login_script.cs" />
