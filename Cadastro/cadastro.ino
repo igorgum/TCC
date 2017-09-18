@@ -162,12 +162,9 @@ void loop () {
     //
     //
     //
-    while (Serial.available() > 0) {
-    Serial.read();
-    }
     if (Serial.available()){
        Ativa = Serial.read();
-       if(Ativa="Ativa"){
+       if(Ativa="Ativa;"){
           while (leu == false){
               leu = getID();            // sets successRead to true when we get read from reader otherwise false
               digitalWrite(blueLed, LED_ON);    // Visualize Master Card need to be defined
@@ -187,9 +184,8 @@ void loop () {
         digitalWrite(redLed, LED_ON);  // Turn on red LED
         digitalWrite(greenLed, LED_OFF);   // Turn off green LED
        }
-       }
     }
-  
+} 
     
 
 
@@ -229,7 +225,7 @@ uint8_t getID() {
   // Until we support 7 byte PICCs
   for ( uint8_t i = 0; i < 4; i++) {  //
     readCard[i] = mfrc522.uid.uidByte[i];
-    Serial.print(readCard[i], HEX);
+    Serial.print(readCard[i], HEX, ";");
   }
   mfrc522.PICC_HaltA(); // Stop reading
   return true;
