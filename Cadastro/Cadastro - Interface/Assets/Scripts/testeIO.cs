@@ -1,23 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO.Ports;
+using UnityEngine.UI;
 
 public class testeIO : MonoBehaviour {
 	//Definiçao da variavel velocidade
 	public string id;
 	public bool fechaPorta;
 	public bool conversar;
+
+	public Text texto; //texto do display2
+
 	//Definiçao da Porta COM que sera utilizada
 	SerialPort porta = new SerialPort("COM4", 9600);
 
 	// Use this for initialization
 	void Start () {
-		print ("startei");
+		//ligando segundo display
+		//O monitor 0 é o primário, o 1 é secundário
+		if (Display.displays.Length > 1) {
+			if (!Display.displays [1].active) {
+				Display.displays [1].Activate ();
+			}
+		}
+
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
+		texto.text = id;
+
 		if (!fechaPorta && conversar) 
 		{
 			StartCoroutine (conversa());

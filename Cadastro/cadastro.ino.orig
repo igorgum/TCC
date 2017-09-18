@@ -150,6 +150,7 @@ void setup() {
 ///////////////////////////////////////// Main Loop ///////////////////////////////////
 void loop () {
 
+<<<<<<< HEAD
   // digitalRead(wipeB) == LOW; - BOTÃO WIPE
   // digitalWrite(blue/red/green/Led, LED_OFF/ON);
   // Serial.println(F("stringue"));
@@ -189,6 +190,46 @@ void loop () {
 
 
 
+=======
+    // digitalRead(wipeB) == LOW; - BOTÃO WIPE 
+    // digitalWrite(blue/red/green/Led, LED_OFF/ON);
+    // Serial.println(F("stringue"));
+    // 
+    // getID()
+    //
+    //
+    //
+    //
+    while (Serial.available() > 0) {
+    Serial.read();
+    }
+    if (Serial.available()){
+       Ativa = Serial.read();
+       if(Ativa="Ativa"){
+          while (leu == false){
+              leu = getID();            // sets successRead to true when we get read from reader otherwise false
+              digitalWrite(blueLed, LED_ON);    // Visualize Master Card need to be defined
+              delay(200);
+              digitalWrite(blueLed, LED_OFF);
+              delay(200);
+              if (leu == true){
+                Ativa = " ";
+              }else{
+              //  Serial.print(Ativa);
+              }
+             }
+        }
+       else
+        {
+        digitalWrite(blueLed, LED_OFF);   // Turn off blue LED
+        digitalWrite(redLed, LED_ON);  // Turn on red LED
+        digitalWrite(greenLed, LED_OFF);   // Turn off green LED
+       }
+       }
+    }
+  
+    
+>>>>>>> parent of b50f39d... New line markers
 
 
 
