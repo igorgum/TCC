@@ -8,6 +8,8 @@ public class Inicializar_script : MonoBehaviour {
 	public GameObject painelPrincipal;
 	public GameObject painelLogin;
 	public Text texto;
+	public InputField inputfieldLogin;
+	public GameObject objetoAvatar;
 
 	void Start () {
 		painelLogin.SetActive (true);
@@ -19,6 +21,9 @@ public class Inicializar_script : MonoBehaviour {
 	void Update(){
 		if (Input.GetMouseButtonDown (0)){
 			texto.text = "";
+		}
+		if (inputfieldLogin.text == "") {
+			objetoAvatar.GetComponent<Avatar_script> ().atualizar ();
 		}
 	}
 

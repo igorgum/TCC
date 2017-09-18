@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\PanelLogin\LoginInputField_script.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\Login_script.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\Deslogar_script.cs" />
+     <Compile Include="Assets\Scripts\testeIO.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
