@@ -12,7 +12,7 @@ public class testeIO : MonoBehaviour {
 	public Text texto; //texto do display2
 
 	//Definiçao da Porta COM que sera utilizada
-	SerialPort porta = new SerialPort("COM4", 9600);
+	SerialPort porta = new SerialPort("COM3", 9600);
 
 	// Use this for initialization
 	void Start () {
@@ -46,8 +46,8 @@ public class testeIO : MonoBehaviour {
 	IEnumerator conversa() 
 	{
 		porta.Open ();
-		porta.ReadTimeout = 5000; //no maximo 5 segundos pra ler
-		porta.WriteTimeout = 5000; //no maximo 5 segundos pra escrever
+		porta.ReadTimeout = 10000; //no maximo 10 segundos pra ler
+		porta.WriteTimeout = 10000; //no maximo 10 segundos pra escrever
 		porta.NewLine = ";"; //define char de fim de linha como ";"
 
 		if (porta.IsOpen) {
@@ -57,9 +57,11 @@ public class testeIO : MonoBehaviour {
 				porta.BaseStream.Flush (); //limpa caca
 
 				id = porta.ReadLine(); //le todo o buffer até o fim de linha
+				porta.Close();
 			} catch (System.Exception){
+				print ("cai no exception");
 			} 
-			yield return new WaitForSeconds (10); //sai do conversa() dps de 10 segundos
+			yield return new WaitForSeconds (20); //sai do conversa() dps de 10 segundos
 		}
 	}
 }

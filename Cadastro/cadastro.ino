@@ -136,13 +136,6 @@ void setup() {
   //If you set Antenna Gain to Max it will increase reading distance
   //mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
 
-  Serial.println(F("inicializando"));   // For debugging purposes
-  ShowReaderDetails();  // Show details of PCD - MFRC522 Card Reader details
-
-  Serial.println("");
-  Serial.println(F("-------------------"));
-  Serial.println(F("Pronto"));
-  Serial.println(F("Pode Começar"));
   cycleLeds();    // Everything ready lets give user some feedback by cycling leds
 }
 
@@ -159,12 +152,13 @@ void loop () {
   //
   //
   //
-  while (Serial.available() > 0) {
-    Serial.read();
-  }
   if (Serial.available()) {
-    Ativa = Serial.read();
-    if (Ativa = "Ativa") {
+    Serial.flush();
+    if (leu){
+      leu = !leu;
+    };
+    Ativa = Serial.readString();
+    if (Ativa == "Ativa;") {
       while (leu == false) {
         leu = getID();            // sets successRead to true when we get read from reader otherwise false
         digitalWrite(blueLed, LED_ON);    // Visualize Master Card need to be defined
@@ -228,6 +222,7 @@ uint8_t getID() {
     readCard[i] = mfrc522.uid.uidByte[i];
     Serial.print(readCard[i], HEX);
   }
+  Serial.print(";");
   mfrc522.PICC_HaltA(); // Stop reading
   return true;
 }
