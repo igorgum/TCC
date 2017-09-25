@@ -20,7 +20,7 @@ public class Login_script : MonoBehaviour {
 			if (isSenhaOk.text != "") {
 
 				//usuario conectado como x ("isLoginOk" é p/ debug, dps vc pega o NOME no banco de dados)
-				conectadoComo.text = "Usuário conectado como " + isLoginOk.text;
+				conectadoComo.text = "Usuário conectado como" + System.Environment.NewLine + isLoginOk.text;
 
 				//limpando/ativando telas
 				statusLogin.text = "";

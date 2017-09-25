@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\PanelPrincipal\Deslogar_script.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\DropdownController_script.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\Dropdowns_script.cs" />
+     <Compile Include="Assets\Scripts\PanelPrincipal\testeIbagem.cs" />
      <Compile Include="Assets\Scripts\testeIO.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

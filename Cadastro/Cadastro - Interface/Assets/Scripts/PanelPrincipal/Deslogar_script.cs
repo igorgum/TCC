@@ -10,7 +10,16 @@ public class Deslogar_script : MonoBehaviour {
 	public GameObject painelPergunta;
 	public InputField login, senha;
 
+	//lista pública de Dropdowns para zerar
+	public Dropdown[] lista;
+
 	public void Sair(){
+		//zerando Dropdowns
+		foreach (Dropdown i in lista)
+		{
+			i.value = 0;
+		}
+
 		//Ativando Painel de login p/ referencias os input fields
 		painelLogin.SetActive (true);
 
