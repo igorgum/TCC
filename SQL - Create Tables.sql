@@ -22,6 +22,7 @@ CREATE TABLE Professor(
 	Nm_Professor	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
 	Avatar		VARCHAR(255),
+	EmailConfirmado BOOLEAN,
 
 	PRIMARY KEY (Cd_Professor)
 );
