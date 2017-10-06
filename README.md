@@ -1,8 +1,8 @@
 # TCC
 -Pronto:
 
-Modelo Conceitual // Feito no BrModelo
+Modelo Conceitual
 
-Modelo Logico     // Feito no BrModelo
+Modelo Logico
 
 SQL
