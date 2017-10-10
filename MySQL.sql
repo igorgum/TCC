@@ -182,3 +182,245 @@ VALUES
 1);
 
 
+INSERT INTO `tcc-test`.`materia`
+(`Cd_Materia`,
+`Horario`,
+`Materia`,
+`Cd_Periodo`)
+VALUES
+(2,
+'14:30',
+'COBOL',
+2);
+
+
+
+INSERT INTO `tcc-test`.`materia`
+(`Cd_Materia`,
+`Horario`,
+`Materia`,
+`Cd_Periodo`)
+VALUES
+(3,
+'19:30',
+'Engenharia de Software',
+3);
+
+
+INSERT INTO `tcc-test`.`funcao`
+(`Cd_Funcao`,
+`Funcao`)
+VALUES
+(1,
+'Limpeza');
+
+INSERT INTO `tcc-test`.`funcao`
+(`Cd_Funcao`,
+`Funcao`)
+VALUES
+(2,
+'Manutencao');
+
+INSERT INTO `tcc-test`.`funcao`
+(`Cd_Funcao`,
+`Funcao`)
+VALUES
+(3,
+'Administracao');
+
+
+INSERT INTO `tcc-test`.`funcionario`
+(`Cd_Funcionario`,
+`Login`,
+`Senha`,
+`Nm_Funcionario`,
+`Email`,
+`Avatar`)
+VALUES
+(1,
+'igor',
+123,
+'Igor',
+'algumacoisa@email.com',
+null);
+
+INSERT INTO `tcc-test`.`func_func`
+(`Cd_Funcionario`,
+`Cd_Funcao`)
+VALUES
+(1,
+3);
+
+
+INSERT INTO `tcc-test`.`aluno`
+(`Cd_Aluno`,
+`Nm_Aluno`,
+`RA`,
+`Email`,
+`Turma`,
+`Avatar`)
+VALUES
+(1,
+'Jeff',
+12345,
+null,
+null,
+null);
+
+INSERT INTO `tcc-test`.`aluno`
+(`Cd_Aluno`,
+`Nm_Aluno`,
+`RA`,
+`Email`,
+`Turma`,
+`Avatar`)
+VALUES
+(2,
+'Carlinhos',
+12346,
+null,
+null,
+null);
+
+INSERT INTO `tcc-test`.`aluno`
+(`Cd_Aluno`,
+`Nm_Aluno`,
+`RA`,
+`Email`,
+`Turma`,
+`Avatar`)
+VALUES
+(3,
+'Jorge',
+12347,
+null,
+null,
+null);
+
+INSERT INTO `tcc-test`.`alun_mat`
+(`Cd_Materia`,
+`Cd_Aluno`,
+`Matriculado`,
+`Aprovado`,
+`Media_Final`)
+VALUES
+(1,
+1,
+true,
+false,
+0);
+
+INSERT INTO `tcc-test`.`alun_mat`
+(`Cd_Materia`,
+`Cd_Aluno`,
+`Matriculado`,
+`Aprovado`,
+`Media_Final`)
+VALUES
+(2,
+2,
+true,
+true,
+10);
+
+INSERT INTO `tcc-test`.`alun_mat`
+(`Cd_Materia`,
+`Cd_Aluno`,
+`Matriculado`,
+`Aprovado`,
+`Media_Final`)
+VALUES
+(3,
+3,
+true,
+true,
+7);
+
+INSERT INTO `tcc-test`.`professor`
+(`Cd_Professor`,
+`Nm_Professor`,
+`Email`,
+`Avatar`,
+`EmailConfirmado`)
+VALUES
+(1,
+'Chiara',
+null,
+null,
+false);
+
+INSERT INTO `tcc-test`.`professor`
+(`Cd_Professor`,
+`Nm_Professor`,
+`Email`,
+`Avatar`,
+`EmailConfirmado`)
+VALUES
+(2,
+'Gerson',
+null,
+null,
+false);
+
+INSERT INTO `tcc-test`.`professor`
+(`Cd_Professor`,
+`Nm_Professor`,
+`Email`,
+`Avatar`,
+`EmailConfirmado`)
+VALUES
+(3,
+'Anesio',
+null,
+null,
+false);
+
+
+
+
+
+
+INSERT INTO `tcc-test`.`sala`
+(`Numero`,
+`Andar`)
+VALUES
+(1,
+1);
+
+INSERT INTO `tcc-test`.`sala`
+(`Numero`,
+`Andar`)
+VALUES
+(2,
+1);
+
+INSERT INTO `tcc-test`.`sala`
+(`Numero`,
+`Andar`)
+VALUES
+(3,
+1);
+
+
+
+
+
+SELECT `materia`.`Cd_Materia`,
+    `materia`.`Horario`,
+    `materia`.`Materia`,
+    `periodo`.`Periodo`
+FROM `tcc-test`.`materia`
+INNER JOIN `periodo` ON `materia`.`Cd_Periodo` = `periodo`.`Cd_Periodo`;
+
+
+
+SELECT funcionario.Nm_Funcionario, funcao.Funcao
+from funcionario
+INNER JOIN func_func ON funcionario.Cd_Funcionario = func_func.Cd_Funcionario INNER JOIN funcao ON
+func_func.Cd_Funcao = funcao.Cd_Funcao;
+
+
+SELECT aluno.Nm_Aluno, materia.Materia, alun_mat.Aprovado, alun_mat.Media_Final
+from aluno
+INNER JOIN alun_mat ON aluno.Cd_Aluno = alun_mat.Cd_Aluno INNER JOIN materia ON
+materia.Cd_Materia = alun_mat.Cd_Materia;
