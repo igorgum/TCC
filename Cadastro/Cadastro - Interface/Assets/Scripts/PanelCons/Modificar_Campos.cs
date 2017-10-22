@@ -8,6 +8,8 @@ public class Modificar_Campos : MonoBehaviour {
 	public GameObject[] objetoOnde; //Começa em Zero
 	private int indice=0; //Indice de "objetoOnde" para mexer
 	public GameObject nomeMenu; //nome do menu pra setar o indice
+	public Button[] btnCodigo; //Botões de código RFID
+	public InputField[] listaExcecoes; //InputFields que não serão afetados
 
 	//Campos (privados)
 	private InputField[] listaInputfields;
@@ -21,17 +23,45 @@ public class Modificar_Campos : MonoBehaviour {
 		Procurar();
 
 		if (isInterativo == true) {
+			//Dropdowns
 			foreach (Dropdown i in listaDropdowns) {
 				i.interactable = true;
 			}
+			//Inputfields
 			foreach (InputField i in listaInputfields) {
+				bool achei=false;
+				foreach (InputField e in listaExcecoes){
+					if ( i.Equals(e) ) {
+						achei=true;
+					}
+				}
+				if (!achei) {
+					i.interactable = true;
+				}
+			}
+			//Botões
+			foreach (Button i in btnCodigo) {
 				i.interactable = true;
 			}
 		} else {
-			foreach (Dropdown i in listaDropdowns) {
+			//Dropdowns
+			foreach (Dropdown i in listaDropdowns) { 
 				i.interactable = false;
 			}
+			//Inputfields
 			foreach (InputField i in listaInputfields) {
+				bool achei=false;
+				foreach (InputField e in listaExcecoes){
+					if ( i.Equals(e) ) {
+						achei=true;
+					}
+				}
+				if (!achei) {
+					i.interactable = false;
+				}
+			}
+			//Botões
+			foreach (Button i in btnCodigo) {
 				i.interactable = false;
 			}
 		}
@@ -92,5 +122,8 @@ public class Modificar_Campos : MonoBehaviour {
 			break;
 		}
 	}
+
+
+
 
 }
