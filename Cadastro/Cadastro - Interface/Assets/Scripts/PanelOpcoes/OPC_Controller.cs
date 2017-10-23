@@ -49,6 +49,16 @@ public class OPC_Controller : MonoBehaviour {
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
 	public void AtualizaPorta(){
 		porta = txtDropdownPorta.GetComponent<Text>().text;
 
@@ -68,7 +78,7 @@ public class OPC_Controller : MonoBehaviour {
 		if (portaArduino.IsOpen) {
 			//SE PORTA ESTIVER ABERTA
 			try {
-				portaArduino.WriteLine ("Ativa"); //writeline manda o parâmetro + o char de fim de linha
+				portaArduino.WriteLine ("kk"); //writeline manda o parâmetro + o char de fim de linha
 				portaArduino.BaseStream.Flush (); //limpa caca
 			
 				resposta = portaArduino.ReadLine (); //le todo o buffer até o fim de linha
