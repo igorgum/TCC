@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\PanelCons\Puxar Dados\DadosFuncio.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\LoginInputField_script.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\Login_script.cs" />
+     <Compile Include="Assets\Scripts\PanelOpcoes\OPC_Controller.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\Avatar_Lista_Consulta.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\Deslogar_script.cs" />
      <Compile Include="Assets\Scripts\PanelPrincipal\DropdownController_script.cs" />

@@ -19,7 +19,8 @@ public class RFID_Controller : MonoBehaviour {
 	//msg quem vem do arduino
 	public string msg = null;
 	//porta que será usada
-	public string com = "COM4";
+	public GameObject com;
+	/*public string com = "COM4";*/
 
 
 	//Inicializa os painéis da cena
@@ -88,7 +89,7 @@ public class RFID_Controller : MonoBehaviour {
 	//Se não conseguir, returna uma string NULL
 	private string Comunicacao(){
 		//Definiçao da Porta COM que sera utilizada
-		porta = new SerialPort(com, 9600);
+		porta = new SerialPort(com.GetComponent<OPC_Controller>().porta, 9600);
 		msg = null;
 		StartCoroutine (conversa());
 		print ("saí");

@@ -10,11 +10,12 @@ public class Inicializar_script : MonoBehaviour {
 	public Text texto;
 	public InputField inputfieldLogin;
 	public GameObject objetoAvatar;
+	public GameObject painelOpcao;
 
 	void Start () {
 		painelLogin.SetActive (true);
 		painelPrincipal.SetActive(false);
-
+		painelOpcao.SetActive (true);
 
 	}
 
