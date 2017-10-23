@@ -53,15 +53,45 @@ public class OPC_Controller : MonoBehaviour {
 		porta = txtDropdownPorta.GetComponent<Text>().text;
 
 		SerialPort portaArduino = new SerialPort(porta, 9600);
+		portaArduino.ReadTimeout = 10000; //no maximo 10 segundos pra ler
+		portaArduino.WriteTimeout = 10000; //no maximo 10 segundos pra escrever
+		portaArduino.NewLine = ";"; //define char de fim de linha como ";"
+		string resposta = null;
+
 		try{
 			portaArduino.Open ();
 		}
 		catch{
 		}
+
+
 		if (portaArduino.IsOpen) {
-			simCOM.SetActive(true);
-			naoCOM.SetActive(false);
+			//SE PORTA ESTIVER ABERTA
+			try {
+				portaArduino.WriteLine ("Ativa"); //writeline manda o parâmetro + o char de fim de linha
+				portaArduino.BaseStream.Flush (); //limpa caca
+			
+				resposta = portaArduino.ReadLine (); //le todo o buffer até o fim de linha
+				portaArduino.Close ();
+			} catch (System.Exception) {
+				print ("cai no exception");
+			} 
+			//VE PERGUNTA
+			if (resposta == "eaemen") {
+				print ("um");
+				simCOM.SetActive (true);
+				naoCOM.SetActive (false);
+			} else if (resposta == "eaemen;") {
+				print ("dois");
+				simCOM.SetActive (true);
+				naoCOM.SetActive (false);
+			} else {
+				//SE RESPOSTA NAO FOR EAEMEN
+				simCOM.SetActive (false);
+				naoCOM.SetActive (true);
+			}
 		} else {
+			//SE PORTA NAO ESTIVER ABERTA
 			simCOM.SetActive(false);
 			naoCOM.SetActive(true);
 		}
