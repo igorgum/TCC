@@ -12,10 +12,12 @@ public class FileBrowserPNG : MonoBehaviour {
 
 	public void AbrePainel(){
 		caminho = EditorUtility.OpenFilePanel("Escolha o arquivo a enviar", "", "png");
-		objController.GetComponent<DadosFuncio> ().imagemintacta = false;
-
+		if (caminho != "") {
+			objController.GetComponent<DadosFuncio> ().imagemintacta = false;
+		}
 	}
 
+	/* DEBUG
 	//Somente para debug, depois retire deste script e jogue no botão SALVAR
 	void Update(){
 		if (debugar) {
@@ -36,4 +38,5 @@ public class FileBrowserPNG : MonoBehaviour {
 		WWW w = new WWW("http://localhost/tcc/uploadTeste.php", formulario);
 		yield return w;
 	}
+	*/
 }

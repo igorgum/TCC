@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Avatar_script.cs" />
+     <Compile Include="Assets\Scripts\BotoesConsulta\btnFuncio_Script.cs" />
      <Compile Include="Assets\Scripts\Inicializar_script.cs" />
      <Compile Include="Assets\Scripts\PanelCons\FileBrowserPNG.cs" />
      <Compile Include="Assets\Scripts\PanelCons\Modificar_Campos.cs" />
