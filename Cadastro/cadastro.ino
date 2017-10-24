@@ -168,12 +168,15 @@ void loop () {
         if (leu == true) {
           Ativa = " ";
         } else {
-          //  Serial.print(Ativa);
+          //LOGGING
         }
       }
     }
     else
     {
+      if(Ativa == "kk;"){
+      Serial.print("eaemen;");
+      }
       digitalWrite(blueLed, LED_OFF);   // Turn off blue LED
       digitalWrite(redLed, LED_ON);  // Turn on red LED
       digitalWrite(greenLed, LED_OFF);   // Turn off green LED
