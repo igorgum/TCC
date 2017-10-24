@@ -24,11 +24,23 @@ public class DadosFuncio : MonoBehaviour {
 	public InputField campoEmail;
 	public Dropdown campoFuncao;
 	public GameObject btnFileBrowser; //nao é o campo, é o botão q contem o script FileBrowser
-	public GameObject objAvatar;
-	//imagem padrao de avatar
+	//imagem padrao de avatar E objAvatar
 	public Texture avatarPadrao;
+	public GameObject objAvatar;
 	//Usado pra pegar o endereco
 	public GameObject controllerOPC;
+	public Dropdown funcaoHolder; //um dropdown q segura todas as funcoes do bd, somente necessario em funcionario
+
+
+
+
+
+
+
+
+
+
+
 
 	//Pesquisa no banco
 	//recebe o codigo via botao
@@ -44,16 +56,52 @@ public class DadosFuncio : MonoBehaviour {
 		yield return txtConsulta;
 
 		String[] substrings = txtConsulta.text.Split('|');
-		substrings[5] = substrings[5].Remove(substrings[5].Length - 1); //tira o ponto e virgula do final
+		substrings[4] = substrings[4].Remove(substrings[4].Length - 1); //tira o ponto e virgula do final
 
 		//Jogando a consulta nas variaveis agora:
 		codigo = substrings[0];
 		login = substrings[1];
 		nome = substrings[2];
 		email = substrings[3];
-		avatar = substrings[4];
-		funcao = 0; //substrings[5];   ta retornando string e deveria ser int, cuida disso dps
+
+		/////////////////////////////////////////////////pegando o dropdown função no banco, pode apagar nos outros controller
+		funcao = 0; //Reminder: tava retornando string e deveria ser int, cuida disso dps
+
+		WWW txtConsulta2 = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/consultas/funcoes/retornarTodas.php");
+		yield return txtConsulta2;
+
+		String[] substrings2 = txtConsulta2.text.Split(';');
+		Array.Resize(ref substrings2, substrings2.Length - 1); //Tirando duplicata gerada pelo splitter
+
+		funcaoHolder.GetComponent<Dropdown> ().ClearOptions();
+		List<string> novaLista2 = new List<string>();
+		novaLista2.Add("Selecione uma funcao...");
+		foreach (var substring in substrings2){
+			novaLista2.Add(substring);
+		}
+		funcaoHolder.GetComponent<Dropdown> ().AddOptions(novaLista2);
+
+		//Agora fazer uma segunda consulta pra saber qual o CD da primeira consulta
+		WWW cdDaConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/consultas/funcoes/retornarCD.php?funcao="+substrings[4]);
+		yield return cdDaConsulta;
+		//Agora vamos comparar
+		int codigoFuncaoRetornada = Int32.Parse(cdDaConsulta.text);
+		if (substrings [4] == funcaoHolder.options[codigoFuncaoRetornada].text) {
+			//Agora que sabemos q é compativel, funcao vira isso
+			funcao = codigoFuncaoRetornada;
+		}
+		DevolverDadosOriginais ();
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
+
+
+
+
+
+
+
 
 	//Zera dados
 	public void Zerar(){
@@ -80,20 +128,24 @@ public class DadosFuncio : MonoBehaviour {
 
 	}
 	IEnumerator carregarImagem(){
-		WWW wwwimg = new WWW (avatar);
-		yield return wwwimg;
+			WWW wwwimg = new WWW (controllerOPC.GetComponent<OPC_Controller> ().endereco
+			             + "/tcc/uploads/" + codigo + ".png");
+			yield return wwwimg;
 
-		if (wwwimg != null) {
-			objAvatar.GetComponent<RawImage> ().texture = wwwimg.texture;
-		} else {
-			objAvatar.GetComponent<RawImage> ().texture = avatarPadrao;
-		}
+			if (wwwimg.error == null) {
+				objAvatar.GetComponent<RawImage> ().texture = wwwimg.texture;
+			} else {
+				objAvatar.GetComponent<RawImage> ().texture = avatarPadrao;
+			}
 	}
 
 	//Pega os Dropdowns e Inputfields, armazena nas variaveis e manda p/ o php
 	//Em seguida chama o zerar
 	public void Atualizar(){
 		//decidir se imagem foi alterada, e se for, chama o enviodepng
+		if (avatar != "") {/*entao alterou, da upload nela*/
+			StartCoroutine (EnvioDePNG());
+		}
 	}
 
 	IEnumerator EnvioDePNG(){

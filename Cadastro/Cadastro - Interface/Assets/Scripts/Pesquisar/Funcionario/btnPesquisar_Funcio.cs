@@ -11,6 +11,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	public Transform Content; //esse é o CONTENT do VIEWPORT
 	//listar todos os possiveis inputfields
 	public InputField inputfieldNome;
+	public InputField inputfieldEmail;
 
 	public Dropdown dropdownFuncao; /*somente usado por funcionario*/
 	public UnityEngine.Object prefab;
@@ -64,7 +65,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 			StartCoroutine(ConsultaPorNome());
 			break;
 		case 2: 
-			//StartCoroutine(ConsultaPorEmail());
+			StartCoroutine(ConsultaPorEmail());
 			break;
 		case 3:
 			//StartCoroutine(ConsultaPorFuncao());
@@ -89,14 +90,6 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	//Além de ser chamado internamente,
 	//tambem deve ser chamado pelo DropdownPor OnValueChange
 	public void LimpaContent(){
-		print (Content.childCount);
-		/*como destruir um pc, volume1
-		//Enquanto Content tiver child, destroy o child que for SIZE-1
-		while(Content.childCount>0){
-			Destroy (Content.GetChild (Content.childCount-1));
-
-		}*/
-
 		foreach (Transform filho in Content) {
 			print("nome do atual =" + filho.name);
 			if (filho.name == "novobotao") {
@@ -137,11 +130,33 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 			print ("codigo ="+substrings[0]);
 		}
 	}
-	/*
-	IEnumerator ConsultaPorEmail(){
-		//fazer!
-	}
 
+	IEnumerator ConsultaPorEmail(){
+		string email = inputfieldEmail.text;
+		print ("EU TENTEI PEGAAAAAA:" + email);
+		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/consultas/funcionario/porEmail.php"
+			+ "?email=" + email);
+		yield return txtConsulta;
+
+		Debug.Log ("retornei isso:"+txtConsulta.text); ///////////////////////DEBUG
+		String[] substrings = txtConsulta.text.Split('|');
+
+		String[] listaDeSubstrings = txtConsulta.text.Split(';');
+		Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
+
+
+		foreach (var substring in listaDeSubstrings){
+			GameObject instancia = (GameObject)Instantiate (prefab, Content);
+			instancia.SetActive (true);
+			instancia.name="novobotao";
+			instancia.GetComponentInChildren<Text>().text= substrings[2];
+			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = substrings [0];
+			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
+			print ("codigo ="+substrings[0]);
+		}
+	}
+	/*
 	IEnumerator ConsultaPorFuncao(){
 		//fazer!
 	}

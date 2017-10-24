@@ -12,8 +12,17 @@ public class btnFuncio_Script : MonoBehaviour {
 	public Texture texturaPadrao;
 	public bool agoraPegaFoto = false;
 
+	private bool tinhafoto;
+	private bool isPossoPassar;
+
 	public void PassaDadosProController() {
-		funcioController.GetComponent<DadosFuncio> ().ResgatarDados (codigoFuncionario);
+		if (isPossoPassar) {
+			funcioController.GetComponent<DadosFuncio> ().ResgatarDados (codigoFuncionario);
+
+			if (tinhafoto) {//se tinha foto, manda dar fetch
+				funcioController.GetComponent<DadosFuncio> ().StartCoroutine("carregarImagem");
+			}
+		}
 	}
 
 	//Assim que o botão for instanciado, tenta pegar a foto do funcionario
@@ -32,10 +41,13 @@ public class btnFuncio_Script : MonoBehaviour {
 		if (wwwimg.error == null) {
 			//objAvatar.GetComponent<RawImage> ().texture = wwwimg.texture;
 			gameObject.GetComponentInChildren<RawImage>().texture = wwwimg.texture;
+			tinhafoto = true;
 		} else {
 		//se não conseguiu
 			//objAvatar.GetComponent<RawImage> ().texture = texturaPadrao;
 			gameObject.GetComponentInChildren<RawImage>().texture = texturaPadrao;
+			tinhafoto = false;
 		}
+		isPossoPassar = true;
 	}
 }
