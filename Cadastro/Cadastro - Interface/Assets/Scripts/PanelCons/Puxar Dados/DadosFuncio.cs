@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class DadosFuncio : MonoBehaviour {
 	//Favor usar um controller para armazenar esse script
@@ -38,10 +39,20 @@ public class DadosFuncio : MonoBehaviour {
 	}
 	IEnumerator Consulta(){
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
-									+ "/tcc/consultarFuncionario.php" + "?codigo=" + codigo);
+									+ "/tcc/consultas/funcionario/porCodigo.php"
+									+ "?codigo=" + codigo);
 		yield return txtConsulta;
-		//IGOR SEU MONGOLOIDE, TERMINA DE BUSCAR NO BANCO SEU DOENTE///////////////////////////////////////////////////////////////////////
 
+		String[] substrings = txtConsulta.text.Split('|');
+		substrings[5] = substrings[5].Remove(substrings[5].Length - 1); //tira o ponto e virgula do final
+
+		//Jogando a consulta nas variaveis agora:
+		codigo = substrings[0];
+		login = substrings[1];
+		nome = substrings[2];
+		email = substrings[3];
+		avatar = substrings[4];
+		funcao = 0; //substrings[5];   ta retornando string e deveria ser int, cuida disso dps
 	}
 
 	//Zera dados

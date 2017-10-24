@@ -63,6 +63,8 @@
      <Compile Include="Assets\Scripts\PanelRFID\MoverLupa.cs" />
      <Compile Include="Assets\Scripts\PanelRFID\RFID_Controller.cs" />
      <Compile Include="Assets\Scripts\PanelRFID\btnLer_Script.cs" />
+     <Compile Include="Assets\Scripts\Pesquisar\Funcionario\btnPesquisar_Funcio.cs" />
+     <Compile Include="Assets\Scripts\Pesquisar\FuncoesRegistradas.cs" />
      <Compile Include="Assets\Scripts\testeIO.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
