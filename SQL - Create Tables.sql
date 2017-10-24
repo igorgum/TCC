@@ -34,6 +34,7 @@ CREATE TABLE Aluno(
 	Email		VARCHAR(50),
 	Turma		DATE,
 	Avatar		VARCHAR(255),
+	EmailConfirmado BOOLEAN,
 
 	PRIMARY KEY (Cd_Aluno)
 );
@@ -45,6 +46,7 @@ CREATE TABLE Funcionario(
 	Nm_Funcionario	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
 	Avatar		VARCHAR(255),
+	EmailConfirmado BOOLEAN,
 
 	PRIMARY KEY (Cd_Funcionario)
 );
