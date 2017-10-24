@@ -11,7 +11,6 @@ public class DadosFuncio : MonoBehaviour {
 	//Dados originais
 	public string codigo;
 	public string login;
-	public string senha;
 	public string nome;
 	public string email;
 	public string avatar;
@@ -20,7 +19,6 @@ public class DadosFuncio : MonoBehaviour {
 	//GameObjects
 	public InputField campoCodigo;
 	public InputField campoLogin;
-	public InputField campoSenha;
 	public InputField campoNome;
 	public InputField campoEmail;
 	public Dropdown campoFuncao;
@@ -28,20 +26,28 @@ public class DadosFuncio : MonoBehaviour {
 	public GameObject objAvatar;
 	//imagem padrao de avatar
 	public Texture avatarPadrao;
-
+	//Usado pra pegar o endereco
+	public GameObject controllerOPC;
 
 	//Pesquisa no banco
 	//recebe o codigo via botao
 	//o parâmetro código é o código de funcionario
-	public void ResgatarDados(int codigo){
-		
+	public void ResgatarDados(string codigo){
+		this.codigo = codigo;
+		StartCoroutine("Consulta");
+	}
+	IEnumerator Consulta(){
+		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+									+ "/tcc/consultarFuncionario.php" + "?codigo=" + codigo);
+		yield return txtConsulta;
+		//IGOR SEU MONGOLOIDE, TERMINA DE BUSCAR NO BANCO SEU DOENTE///////////////////////////////////////////////////////////////////////
+
 	}
 
 	//Zera dados
 	public void Zerar(){
 		campoCodigo.text = null;
 		campoLogin.text = null;
-		campoSenha.text = null;
 		campoNome.text = null;
 		campoEmail.text = null;
 		campoFuncao.value = 0;
@@ -55,7 +61,6 @@ public class DadosFuncio : MonoBehaviour {
 	public void DevolverDadosOriginais(){
 		campoCodigo.text = codigo;
 		campoLogin.text = login;
-		campoSenha.text = senha;
 		campoNome.text = nome;
 		campoEmail.text = email;
 		campoFuncao.value = funcao;
@@ -86,13 +91,13 @@ public class DadosFuncio : MonoBehaviour {
 		//instacia o formulario
 		WWWForm formulario = new WWWForm();
 		//novo nome da imagem (dps faz o algoritmo de selecionar primeironome)
-		string novoNome="goiabada.png";
+		string novoNome=codigo+".png";
 		//pega os bytes da imagem
 		byte[] bytesDaImg = File.ReadAllBytes(caminho);
 		//adiciona imagem ao formulario
 		formulario.AddBinaryData("arquivo", bytesDaImg, novoNome,"image/png");
 		//faz upload
-		WWW w = new WWW("http://localhost/tcc/uploadTeste.php", formulario);
+		WWW w = new WWW("http://localhost/tcc/uploadAvatar.php", formulario);
 		yield return w;
 	}
 }

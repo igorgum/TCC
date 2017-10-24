@@ -21,12 +21,12 @@ public class MoverLupa : MonoBehaviour {
 	void FixedUpdate () {
 
 			if (!voltar) {
-				Debug.Log (cont);
+				//Debug.Log (cont);
 				transform.Translate (velocidade * Time.deltaTime, 0, 0);
 				cont++;
 				if (cont == 120) {voltar = true;}
 			} else {
-				Debug.Log (cont);
+				//Debug.Log (cont);
 			transform.Translate ((velocidade*-1) * Time.deltaTime, 0, 0);
 				cont--;
 				if (cont == 0) {voltar = false;}

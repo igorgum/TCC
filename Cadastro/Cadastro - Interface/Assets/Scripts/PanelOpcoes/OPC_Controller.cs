@@ -72,45 +72,36 @@ public class OPC_Controller : MonoBehaviour {
 		try{
 			portaArduino.Open ();
 			if (portaArduino.IsOpen) {
-				print ("entrei no if");
 				//SE PORTA ESTIVER ABERTA
 				try {
-					print ("entrei no try");
 					portaArduino.WriteLine ("kk"); //writeline manda o parâmetro + o char de fim de linha
-					print ("escrevi");
 					portaArduino.BaseStream.Flush (); //limpa caca
-					print ("dei flush");
 
 					resposta = portaArduino.ReadLine (); //le todo o buffer até o fim de linha
-					print ("li");
 					portaArduino.Close ();
-					print ("fechei");
 				} catch (System.Exception) {
-					print ("cai no exception2");
 				} 
 				//VE PERGUNTA
-				print ("vamos ver a pergunta");
 				if (resposta == "eaemen") {
-					print ("um");
 					simCOM.SetActive (true);
 					naoCOM.SetActive (false);
 				} else {
 					//SE RESPOSTA NAO FOR EAEMEN
-					print ("dois");
 					simCOM.SetActive (false);
 					naoCOM.SetActive (true);
 				}
 			} else {
 				//SE PORTA NAO ESTIVER ABERTA
-				print ("tres");
 				simCOM.SetActive(false);
 				naoCOM.SetActive(true);
 			}
 			portaArduino.Close ();
 		}
 		catch{
-			print ("cai no exception1");
+			simCOM.SetActive(false);
+			naoCOM.SetActive(true);
 		}
+		yield return new WaitForSeconds (20);
 	}
 
 
