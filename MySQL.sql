@@ -1,5 +1,6 @@
-
 CREATE DATABASE TCC;
+
+USE TCC;
 
 CREATE TABLE Periodo(
 	Cd_Periodo	CHAR(1) NOT NULL UNIQUE,
@@ -22,7 +23,7 @@ CREATE TABLE Professor(
 	Cd_Professor 	CHAR(4) NOT NULL UNIQUE,
 	Nm_Professor	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
-	Avatar		VARCHAR(255),
+	
 
 	PRIMARY KEY (Cd_Professor)
 );
@@ -33,7 +34,6 @@ CREATE TABLE Aluno(
 	RA		CHAR(10) NOT NULL UNIQUE,
 	Email		VARCHAR(50),
 	Turma		DATE,
-	Avatar		VARCHAR(255),
 
 	PRIMARY KEY (Cd_Aluno)
 );
@@ -44,7 +44,6 @@ CREATE TABLE Funcionario(
 	Senha		VARCHAR(32),
 	Nm_Funcionario	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
-	Avatar		VARCHAR(255),
 	EmailConfirmado BOOLEAN,
 
 	PRIMARY KEY (Cd_Funcionario)
@@ -147,21 +146,21 @@ CREATE TABLE Func_Func(
 );
 
 
-INSERT INTO `tcc-test`.`periodo`
+INSERT INTO `tcc`.`periodo`
 (`Cd_Periodo`,
 `Periodo`)
 VALUES
 (1,
 'Matutino');
 
-INSERT INTO `tcc-test`.`periodo`
+INSERT INTO `tcc`.`periodo`
 (`Cd_Periodo`,
 `Periodo`)
 VALUES
 (2,
 'Vespertino');
 
-INSERT INTO `tcc-test`.`periodo`
+INSERT INTO `tcc`.`periodo`
 (`Cd_Periodo`,
 `Periodo`)
 VALUES
@@ -170,7 +169,7 @@ VALUES
 
 
 
-INSERT INTO `tcc-test`.`materia`
+INSERT INTO `tcc`.`materia`
 (`Cd_Materia`,
 `Horario`,
 `Materia`,
@@ -182,7 +181,7 @@ VALUES
 1);
 
 
-INSERT INTO `tcc-test`.`materia`
+INSERT INTO `tcc`.`materia`
 (`Cd_Materia`,
 `Horario`,
 `Materia`,
@@ -195,7 +194,7 @@ VALUES
 
 
 
-INSERT INTO `tcc-test`.`materia`
+INSERT INTO `tcc`.`materia`
 (`Cd_Materia`,
 `Horario`,
 `Materia`,
@@ -207,21 +206,21 @@ VALUES
 3);
 
 
-INSERT INTO `tcc-test`.`funcao`
+INSERT INTO `tcc`.`funcao`
 (`Cd_Funcao`,
 `Funcao`)
 VALUES
 (1,
 'Limpeza');
 
-INSERT INTO `tcc-test`.`funcao`
+INSERT INTO `tcc`.`funcao`
 (`Cd_Funcao`,
 `Funcao`)
 VALUES
 (2,
 'Manutencao');
 
-INSERT INTO `tcc-test`.`funcao`
+INSERT INTO `tcc`.`funcao`
 (`Cd_Funcao`,
 `Funcao`)
 VALUES
@@ -229,75 +228,87 @@ VALUES
 'Administracao');
 
 
-INSERT INTO `tcc-test`.`funcionario`
+INSERT INTO `tcc`.`funcionario`
 (`Cd_Funcionario`,
 `Login`,
 `Senha`,
 `Nm_Funcionario`,
-`Email`,
-`Avatar`)
+`Email`)
 VALUES
 (1,
 'igor',
 123,
 'Igor',
-'algumacoisa@email.com',
-null);
+'algumacoisa@email.com');
 
-INSERT INTO `tcc-test`.`func_func`
+INSERT INTO `tcc`.`funcionario`
+(`Cd_Funcionario`,
+`Login`,
+`Senha`,
+`Nm_Funcionario`,
+`Email`)
+VALUES
+('XUPA',
+'Jeff',
+321,
+'Jeff',
+'Jeff@email.com');
+
+INSERT INTO `tcc`.`func_func`
 (`Cd_Funcionario`,
 `Cd_Funcao`)
 VALUES
 (1,
 3);
 
+INSERT INTO `tcc`.`func_func`
+(`Cd_Funcionario`,
+`Cd_Funcao`)
+VALUES
+('XUPA',
+3);
 
-INSERT INTO `tcc-test`.`aluno`
+
+INSERT INTO `tcc`.`aluno`
 (`Cd_Aluno`,
 `Nm_Aluno`,
 `RA`,
 `Email`,
-`Turma`,
-`Avatar`)
+`Turma`)
 VALUES
 (1,
 'Jeff',
 12345,
 null,
-null,
 null);
 
-INSERT INTO `tcc-test`.`aluno`
+INSERT INTO `tcc`.`aluno`
 (`Cd_Aluno`,
 `Nm_Aluno`,
 `RA`,
 `Email`,
-`Turma`,
-`Avatar`)
+`Turma`)
 VALUES
 (2,
 'Carlinhos',
 12346,
 null,
-null,
 null);
 
-INSERT INTO `tcc-test`.`aluno`
+INSERT INTO `tcc`.`aluno`
 (`Cd_Aluno`,
 `Nm_Aluno`,
 `RA`,
 `Email`,
-`Turma`,
-`Avatar`)
+`Turma`)
 VALUES
 (3,
 'Jorge',
 12347,
 null,
-null,
 null);
 
-INSERT INTO `tcc-test`.`alun_mat`
+INSERT INTO `tcc`.`alun_mat`
 (`Cd_Materia`,
 `Cd_Aluno`,
 `Matriculado`,
@@ -310,7 +321,7 @@ true,
 false,
 0);
 
-INSERT INTO `tcc-test`.`alun_mat`
+INSERT INTO `tcc`.`alun_mat`
 (`Cd_Materia`,
 `Cd_Aluno`,
 `Matriculado`,
@@ -323,7 +334,7 @@ true,
 true,
 10);
 
-INSERT INTO `tcc-test`.`alun_mat`
+INSERT INTO `tcc`.`alun_mat`
 (`Cd_Materia`,
 `Cd_Aluno`,
 `Matriculado`,
@@ -336,65 +347,55 @@ true,
 true,
 7);
 
-INSERT INTO `tcc-test`.`professor`
+
+
+INSERT INTO `tcc`.`professor`
 (`Cd_Professor`,
 `Nm_Professor`,
-`Email`,
-`Avatar`,
-`EmailConfirmado`)
+`Email`)
 VALUES
 (1,
 'Chiara',
-null,
-null,
-false);
+null);
 
-INSERT INTO `tcc-test`.`professor`
+INSERT INTO `tcc`.`professor`
 (`Cd_Professor`,
 `Nm_Professor`,
-`Email`,
-`Avatar`,
-`EmailConfirmado`)
+`Email`)
 VALUES
 (2,
 'Gerson',
-null,
-null,
-false);
+null);
 
-INSERT INTO `tcc-test`.`professor`
+INSERT INTO `tcc`.`professor`
 (`Cd_Professor`,
 `Nm_Professor`,
-`Email`,
-`Avatar`,
-`EmailConfirmado`)
+`Email`)
 VALUES
 (3,
 'Anesio',
-null,
-null,
-false);
+null);
 
 
 
 
 
 
-INSERT INTO `tcc-test`.`sala`
+INSERT INTO `tcc`.`sala`
 (`Numero`,
 `Andar`)
 VALUES
 (1,
 1);
 
-INSERT INTO `tcc-test`.`sala`
+INSERT INTO `tcc`.`sala`
 (`Numero`,
 `Andar`)
 VALUES
 (2,
 1);
 
-INSERT INTO `tcc-test`.`sala`
+INSERT INTO `tcc`.`sala`
 (`Numero`,
 `Andar`)
 VALUES
@@ -409,18 +410,23 @@ SELECT `materia`.`Cd_Materia`,
     `materia`.`Horario`,
     `materia`.`Materia`,
     `periodo`.`Periodo`
-FROM `tcc-test`.`materia`
+FROM `tcc`.`materia`
 INNER JOIN `periodo` ON `materia`.`Cd_Periodo` = `periodo`.`Cd_Periodo`;
 
 
 
-SELECT funcionario.Nm_Funcionario, funcao.Funcao
+SELECT funcionario.Cd_Funcionario, funcionario.Login, funcionario.Senha, funcionario.Nm_Funcionario, funcionario.Email, funcionario.Avatar, funcao.Funcao
 from funcionario
 INNER JOIN func_func ON funcionario.Cd_Funcionario = func_func.Cd_Funcionario INNER JOIN funcao ON
-func_func.Cd_Funcao = funcao.Cd_Funcao;
+func_func.Cd_Funcao = funcao.Cd_Funcao
+where funcionario.Cd_Funcionario = 1;
+
 
 
 SELECT aluno.Nm_Aluno, materia.Materia, alun_mat.Aprovado, alun_mat.Media_Final
 from aluno
 INNER JOIN alun_mat ON aluno.Cd_Aluno = alun_mat.Cd_Aluno INNER JOIN materia ON
 materia.Cd_Materia = alun_mat.Cd_Materia;
+
+SELECT * FROM `funcionario` WHERE 1
+
