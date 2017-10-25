@@ -17,6 +17,8 @@ public class Inicializar_script : MonoBehaviour {
 		painelPrincipal.SetActive(false);
 		painelOpcao.SetActive (true);
 
+		string coisa = Network.player.ipAddress;
+		print (coisa);
 	}
 
 	void Update(){
