@@ -30,6 +30,6 @@
 		echo utf8_encode($linha -> Email);
 		echo '|';
 		echo utf8_encode($linha -> Funcao);
-		echo ';';
+		echo '|';
 	}
 	

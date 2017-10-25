@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Inicializar_script.cs" />
      <Compile Include="Assets\Scripts\PanelCons\FileBrowserPNG.cs" />
      <Compile Include="Assets\Scripts\PanelCons\Modificar_Campos.cs" />
+     <Compile Include="Assets\Scripts\PanelCons\Puxar Dados\DEBUG.cs" />
      <Compile Include="Assets\Scripts\PanelCons\Puxar Dados\DadosFuncio.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\LoginInputField_script.cs" />
      <Compile Include="Assets\Scripts\PanelLogin\Login_script.cs" />

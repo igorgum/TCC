@@ -14,7 +14,8 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	public InputField inputfieldEmail;
 
 	public Dropdown dropdownFuncao; /*somente usado por funcionario*/
-	public UnityEngine.Object prefab;
+	public UnityEngine.Object prefab; //um prefab de botão, pra usar como molde pros resultados
+	public UnityEngine.Object naoEncontreiNada; //um prefab de texto escrito q ñ encontrou nada
 
 
 
@@ -65,6 +66,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 			StartCoroutine(ConsultaPorNome());
 			break;
 		case 2: 
+			LimpaContent ();
 			StartCoroutine(ConsultaPorEmail());
 			break;
 		case 3:
@@ -91,69 +93,102 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	//tambem deve ser chamado pelo DropdownPor OnValueChange
 	public void LimpaContent(){
 		foreach (Transform filho in Content) {
-			print("nome do atual =" + filho.name);
-			if (filho.name == "novobotao") {
-				print("apaguei o de cima");
+			//print("nome do atual =" + filho.name);
+			if (filho.name == "novobotao" || filho.name == "btnNaoEncontreiNada(Clone)") {
+				//print("apaguei o de cima");
 				Destroy (filho.gameObject);
 			}
 		}
 	}
 
 	//////////////////////////////////////////////////Consultas
+
+
 	IEnumerator ConsultaPorNome(){
 		string nome = inputfieldNome.text;
+		if (nome == "") {
+			Instantiate (naoEncontreiNada, Content); //nenhum resultado
+			yield break; 
+		}
 
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
 			+ "/tcc/consultas/funcionario/porNome.php"
 			+ "?nome=" + nome);
 		yield return txtConsulta;
 
-		Debug.Log ("retornei isso:"+txtConsulta.text); ///////////////////////DEBUG
-		String[] substrings = txtConsulta.text.Split('|');
-		/*código pra pegar todos os campos
-		foreach (var substring in substrings){
-			print(substring);
-		}
-		*/
-		//substrings[0];
-		String[] listaDeSubstrings = txtConsulta.text.Split(';');
-		Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
-			
-
-		foreach (var substring in listaDeSubstrings){
+		//print ("Resultado da consulta: " + txtConsulta.text);
+		//////////////////////////////////////////////////////////
+		/////////////////////////////////////////arrumando o vetor
+		/**//**//**//**/int qnts=0;
+		/**//**//**//**/
+		/**//**//**//**/String[] listaDeSubstrings = txtConsulta.text.Split('|');
+		/**//**//**//**/Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
+		/**//**//**//**/////////////////////////////////contando numero de pessoas
+		/**//**//**//**/int cont = 0;
+		/**//**//**//**/foreach (var substring1 in listaDeSubstrings) {
+		/**//**//**//**/	cont++;
+		/**//**//**//**/}
+		/**//**//**//**/if (cont == 0) {
+		/**//**//**//**/	Instantiate (naoEncontreiNada, Content); //nenhum resultado
+		/**//**//**//**/} else {
+		/**//**//**//**/	qnts = cont / 5;
+		/**//**//**//**/	print ("retornei " + qnts + " pessoas");
+		/**//**//**//**/}
+		//////////////////////////////////////Instanciando botões, CUSTOMIZAVEL
+		int numeroDeCamposRetornados=4; //MUDE ISSO, são qnts campos o SELECT retorna
+		numeroDeCamposRetornados++;
+		for(int i = 0; i<qnts; i++){
+			//print (listaDeSubstrings [i*numeroDeCamposRetornados+0]); //o ZERO é o campo que vc quer
 			GameObject instancia = (GameObject)Instantiate (prefab, Content);
 			instancia.SetActive (true);
 			instancia.name="novobotao";
-			instancia.GetComponentInChildren<Text>().text= substrings[2];
-			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = substrings [0];
+			instancia.GetComponentInChildren<Text>().text= listaDeSubstrings [i*numeroDeCamposRetornados+2];
+			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = listaDeSubstrings [i*numeroDeCamposRetornados+0];
 			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
-			print ("codigo ="+substrings[0]);
 		}
 	}
 
+
 	IEnumerator ConsultaPorEmail(){
 		string email = inputfieldEmail.text;
-		print ("EU TENTEI PEGAAAAAA:" + email);
+		if (email == "") { 
+			Instantiate (naoEncontreiNada, Content); //nenhum resultado
+			yield break; 
+		}
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
 			+ "/tcc/consultas/funcionario/porEmail.php"
 			+ "?email=" + email);
 		yield return txtConsulta;
 
-		Debug.Log ("retornei isso:"+txtConsulta.text); ///////////////////////DEBUG
-		String[] substrings = txtConsulta.text.Split('|');
-
-		String[] listaDeSubstrings = txtConsulta.text.Split(';');
-		Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
-
-
-		foreach (var substring in listaDeSubstrings){
+		//print ("Resultado da consulta: " + txtConsulta.text);
+		//////////////////////////////////////////////////////////
+		/////////////////////////////////////////arrumando o vetor
+		/**//**//**//**/int qnts=0;
+		/**//**//**//**/
+		/**//**//**//**/String[] listaDeSubstrings = txtConsulta.text.Split('|');
+		/**//**//**//**/Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
+		/**//**//**//**/////////////////////////////////contando numero de pessoas
+		/**//**//**//**/int cont = 0;
+		/**//**//**//**/foreach (var substring1 in listaDeSubstrings) {
+		/**//**//**//**/	cont++;
+		/**//**//**//**/}
+		/**//**//**//**/if (cont == 0) {
+		/**//**//**//**/	Instantiate (naoEncontreiNada, Content); //nenhum resultado
+		/**//**//**//**/} else {
+		/**//**//**//**/	qnts = cont / 5;
+		/**//**//**//**/	print ("retornei " + qnts + " pessoas");
+		/**//**//**//**/}
+		//////////////////////////////////////Instanciando botões, CUSTOMIZAVEL
+		int numeroDeCamposRetornados=4; //MUDE ISSO, são qnts campos o SELECT retorna
+		numeroDeCamposRetornados++;
+		for(int i = 0; i<qnts; i++){
+			//print (listaDeSubstrings [i*numeroDeCamposRetornados+0]); //o ZERO é o campo que vc quer
 			GameObject instancia = (GameObject)Instantiate (prefab, Content);
 			instancia.SetActive (true);
 			instancia.name="novobotao";
-			instancia.GetComponentInChildren<Text>().text= substrings[2];
-			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = substrings [0];
+			instancia.GetComponentInChildren<Text>().text= listaDeSubstrings [i*numeroDeCamposRetornados+2];
+			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = listaDeSubstrings [i*numeroDeCamposRetornados+0];
 			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
-			print ("codigo ="+substrings[0]);
 		}
 	}
 	/*
