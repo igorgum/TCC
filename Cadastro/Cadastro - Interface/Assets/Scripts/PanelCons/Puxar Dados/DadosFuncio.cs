@@ -6,6 +6,7 @@ using System.IO;
 using System;
 
 public class DadosFuncio : MonoBehaviour {
+	public GameObject Loading;
 	//Favor usar um controller para armazenar esse script
 	//Esse script deve ser chamado pelo button da lista de Consultas
 
@@ -50,6 +51,7 @@ public class DadosFuncio : MonoBehaviour {
 		StartCoroutine("Consulta");
 	}
 	IEnumerator Consulta(){
+		Loading.SetActive (true);
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
 									+ "/tcc/consultas/funcionario/porCodigo.php"
 									+ "?codigo=" + codigo);
@@ -92,6 +94,7 @@ public class DadosFuncio : MonoBehaviour {
 			//Agora que sabemos q é compativel, funcao vira isso
 			funcao = codigoFuncaoRetornada;
 		}
+		Loading.SetActive (false);
 		DevolverDadosOriginais ();
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}

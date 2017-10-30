@@ -19,10 +19,11 @@ public class OPC_Controller : MonoBehaviour {
 	public string endereco;
 
 
+	public GameObject Loading;
 
 	void Start () {
 		dropdownPorta.value = 0;
-		inputfieldEndereco.text="127.0.0.1";
+		inputfieldEndereco.text= Network.player.ipAddress + ":80";
 
 		AtualizaPorta();
 		AtualizaEndereco ();
@@ -36,6 +37,8 @@ public class OPC_Controller : MonoBehaviour {
 		StartCoroutine (SiteVivo());
 	}
 	public IEnumerator SiteVivo(){
+		Loading.SetActive (true);
+
 		WWW w = new WWW (endereco+"/tcc/kkeaemen.php"+"?pergunta=kk");
 		simCONEXAO.SetActive(false);
 		naoCONEXAO.SetActive(false);
@@ -47,6 +50,8 @@ public class OPC_Controller : MonoBehaviour {
 			simCONEXAO.SetActive(false);
 			naoCONEXAO.SetActive(true);
 		}
+
+		Loading.SetActive (false);
 	}
 
 

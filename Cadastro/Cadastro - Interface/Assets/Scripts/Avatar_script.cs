@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Avatar_script : MonoBehaviour {
 
 	public Texture2D padrao;
 	public InputField inputfieldLogin;
 	public RawImage imagem, imagem2;
-	private string url = "https://avatars1.githubusercontent.com/u/31558711";
+	public string url;
+
+	public GameObject controllerOPC;
+	public GameObject Loading;//painel LOADING
 
 	// Use this for initialization
 	public void atualizar () {
@@ -16,26 +20,58 @@ public class Avatar_script : MonoBehaviour {
 		//inputfieldLogin = inputfieldLoginaso.GetComponent<InputField> ();
 
 		if (inputfieldLogin.text != string.Empty) {
-				//agora irei verificar se login está como "igor", somente para debugar
-				//depois mude para procurar no server o nome do usuario
-			if (inputfieldLogin.text.Equals ("igor")) {
-				imagem = this.gameObject.GetComponent<RawImage> ();
-				StartCoroutine ("carregarImagem");
-			} else {
-				imagem.texture = padrao;
-				imagem2.texture = padrao;
-			}
+			StartCoroutine ("PuxarLogin");
 		} else {
 			imagem.texture = padrao;
 			imagem2.texture = padrao;
 		}
 	}
 		
+	IEnumerator PuxarLogin(){
+		Loading.SetActive (true);
+		string login = inputfieldLogin.text;
+
+		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/login/consultaLogin.php"
+			+ "?login=" + login);
+		yield return txtConsulta;
+
+		if (txtConsulta.text == null || txtConsulta.text == "") {
+			url = null;
+			imagem.texture = padrao;
+			imagem2.texture = padrao;
+			Loading.SetActive (false);
+			yield break;
+		}
+
+		String[] listaDeSubstrings = txtConsulta.text.Split('|');
+
+		if (inputfieldLogin.text.Equals (listaDeSubstrings[1])) {
+			url = listaDeSubstrings [0];
+			imagem = this.gameObject.GetComponent<RawImage> ();
+			StartCoroutine ("carregarImagem");
+		} else {
+			url = null;
+			imagem.texture = padrao;
+			imagem2.texture = padrao;
+		}
+		Loading.SetActive (false);
+	}
+
 	IEnumerator carregarImagem(){
-		WWW wwwimg = new WWW (url);
+		Loading.SetActive (true);
+		WWW wwwimg = new WWW (controllerOPC.GetComponent<OPC_Controller> ().endereco
+			+ "/tcc/uploads/" + url + ".png");
 		yield return wwwimg;
 
-		imagem.texture = wwwimg.texture;
-		imagem2.texture = imagem.texture;
+		if (wwwimg.error == null) {
+			imagem.texture = wwwimg.texture;
+			imagem2.texture = imagem.texture;
+		} else {
+			imagem.texture = padrao;
+			imagem2.texture = padrao;
+		}
+
+		Loading.SetActive (false);
 	}
 }
