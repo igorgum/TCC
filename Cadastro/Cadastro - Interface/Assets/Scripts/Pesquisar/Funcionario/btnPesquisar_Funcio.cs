@@ -19,7 +19,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 
 
 
-
+	public GameObject Loading;
 
 
 
@@ -105,9 +105,11 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 
 
 	IEnumerator ConsultaPorNome(){
+		Loading.SetActive (true);
 		string nome = inputfieldNome.text;
 		if (nome == "") {
 			Instantiate (naoEncontreiNada, Content); //nenhum resultado
+			Loading.SetActive (false);
 			yield break; 
 		}
 
@@ -146,13 +148,16 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = listaDeSubstrings [i*numeroDeCamposRetornados+0];
 			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
 		}
+		Loading.SetActive (false);
 	}
 
 
 	IEnumerator ConsultaPorEmail(){
+		Loading.SetActive (true);
 		string email = inputfieldEmail.text;
 		if (email == "") { 
 			Instantiate (naoEncontreiNada, Content); //nenhum resultado
+			Loading.SetActive (false);
 			yield break; 
 		}
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
@@ -190,6 +195,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = listaDeSubstrings [i*numeroDeCamposRetornados+0];
 			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
 		}
+		Loading.SetActive (false);
 	}
 	/*
 	IEnumerator ConsultaPorFuncao(){
