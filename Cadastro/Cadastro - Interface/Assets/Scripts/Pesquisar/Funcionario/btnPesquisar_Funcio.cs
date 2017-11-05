@@ -86,7 +86,46 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 
 	//Deve ser chamado pelo botão listartodos
 	public void PesquisarTodos(){
-		
+		StartCoroutine ("PesquisarTudo");
+	}
+	public IEnumerator PesquisarTudo(){
+		Loading.SetActive (false);
+		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/consultas/funcionario/porNome.php"
+			+ "?nome=");
+		yield return txtConsulta;
+
+		//print ("Resultado da consulta: " + txtConsulta.text);
+		//////////////////////////////////////////////////////////
+		/////////////////////////////////////////arrumando o vetor
+		/**//**//**//**/int qnts=0;
+		/**//**//**//**/
+		/**//**//**//**/String[] listaDeSubstrings = txtConsulta.text.Split('|');
+		/**//**//**//**/Array.Resize(ref listaDeSubstrings, listaDeSubstrings.Length - 1); //Tirando duplicata gerada pelo splitter
+		/**//**//**//**/////////////////////////////////contando numero de pessoas
+		/**//**//**//**/int cont = 0;
+		/**//**//**//**/foreach (var substring1 in listaDeSubstrings) {
+		/**//**//**//**/	cont++;
+		/**//**//**//**/}
+		/**//**//**//**/if (cont == 0) {
+		/**//**//**//**/	Instantiate (naoEncontreiNada, Content); //nenhum resultado
+		/**//**//**//**/} else {
+		/**//**//**//**/	qnts = cont / 5;
+		/**//**//**//**/	print ("retornei " + qnts + " pessoas");
+		/**//**//**//**/}
+		//////////////////////////////////////Instanciando botões, CUSTOMIZAVEL
+		int numeroDeCamposRetornados=4; //MUDE ISSO, são qnts campos o SELECT retorna
+		numeroDeCamposRetornados++;
+		for(int i = 0; i<qnts; i++){
+			//print (listaDeSubstrings [i*numeroDeCamposRetornados+0]); //o ZERO é o campo que vc quer
+			GameObject instancia = (GameObject)Instantiate (prefab, Content);
+			instancia.SetActive (true);
+			instancia.name="novobotao";
+			instancia.GetComponentInChildren<Text>().text= listaDeSubstrings [i*numeroDeCamposRetornados+2];
+			instancia.GetComponent<btnFuncio_Script> ().codigoFuncionario = listaDeSubstrings [i*numeroDeCamposRetornados+0];
+			instancia.GetComponent<btnFuncio_Script> ().agoraPegaFoto = true;
+		}
+		Loading.SetActive (false);
 	}
 		
 	//Além de ser chamado internamente,

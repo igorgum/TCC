@@ -50,6 +50,10 @@
      <Compile Include="Assets\Scripts\Anim\Size_anim.cs" />
      <Compile Include="Assets\Scripts\Avatar_script.cs" />
      <Compile Include="Assets\Scripts\BotoesConsulta\btnFuncio_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\CancelarOque_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\EnviarEmail_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\SalvarOque_script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\VoltarActive_Script.cs" />
      <Compile Include="Assets\Scripts\Inicializar_script.cs" />
      <Compile Include="Assets\Scripts\PanelCons\FileBrowserPNG.cs" />
      <Compile Include="Assets\Scripts\PanelCons\Modificar_Campos.cs" />

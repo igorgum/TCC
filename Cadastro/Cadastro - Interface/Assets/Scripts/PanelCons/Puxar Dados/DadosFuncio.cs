@@ -15,7 +15,7 @@ public class DadosFuncio : MonoBehaviour {
 	public string login;
 	public string nome;
 	public string email;
-	public string avatar;
+	public string caminho; //usado pelo FILEBROWSER, ou seja, é o caminho da NOVA imagem
 	public int funcao;
 	public bool imagemintacta = true;
 	//GameObjects
@@ -115,6 +115,7 @@ public class DadosFuncio : MonoBehaviour {
 		campoFuncao.value = 0;
 		objAvatar.GetComponent<RawImage> ().texture = avatarPadrao;
 		imagemintacta = true;
+		caminho = null;
 
 	}
 
@@ -145,14 +146,35 @@ public class DadosFuncio : MonoBehaviour {
 	//Pega os Dropdowns e Inputfields, armazena nas variaveis e manda p/ o php
 	//Em seguida chama o zerar
 	public void Atualizar(){
+		Debug.Log ("fui chamado");
 		//decidir se imagem foi alterada, e se for, chama o enviodepng
-		if (avatar != "") {/*entao alterou, da upload nela*/
+		if (!imagemintacta) {/*entao alterou, da upload nela*/
 			StartCoroutine (EnvioDePNG());
 		}
+		StartCoroutine ("updatefuncio");
+	}
+	IEnumerator updatefuncio(){
+		Loading.SetActive (true);
+
+		WWWForm formulario = new WWWForm();
+		formulario.AddField ("VARCd_Funcionario", campoCodigo.text);
+		formulario.AddField ("VARLogin", campoLogin.text);
+		formulario.AddField ("VARNm_Funcionario", campoNome.text);
+		formulario.AddField ("VAREmail", campoEmail.text);
+		formulario.AddField ("VARCdFuncao", campoFuncao.value);
+		formulario.AddField ("X", codigo);
+
+		Loading.SetActive (true);
+		WWW update = new WWW( controllerOPC.GetComponent<OPC_Controller> ().endereco
+			+ "/tcc/insercoes/updates/funcionario.php", formulario);
+		yield return update;
+
+		Loading.SetActive (false);
 	}
 
+
 	IEnumerator EnvioDePNG(){
-		string caminho = objAvatar.GetComponent<FileBrowserPNG> ().caminho;
+		//string caminho = objAvatar.GetComponent<FileBrowserPNG> ().caminho;
 
 		//instacia o formulario
 		WWWForm formulario = new WWWForm();
@@ -165,5 +187,6 @@ public class DadosFuncio : MonoBehaviour {
 		//faz upload
 		WWW w = new WWW("http://localhost/tcc/uploadAvatar.php", formulario);
 		yield return w;
+		Debug.Log("consegui trocar o avatar, mas falta o resto");
 	}
 }
