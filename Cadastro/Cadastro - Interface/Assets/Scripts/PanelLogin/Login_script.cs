@@ -54,7 +54,7 @@ public class Login_script : MonoBehaviour {
 		yield return txtConsulta;
 
 		if (txtConsulta.text != "|") {
-			conectadoComo.text = "Usuário conectado como " + txtConsulta.text;
+			conectadoComo.text = "Usuário conectado como\n" + txtConsulta.text;
 			//limpando/ativando telas
 			statusLogin.text = "";
 			painelLogin.SetActive (false);

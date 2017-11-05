@@ -20,6 +20,7 @@ public class OPC_Controller : MonoBehaviour {
 
 
 	public GameObject Loading;
+	public GameObject panelLoginIsActive;
 
 	void Start () {
 		dropdownPorta.value = 0;
@@ -28,6 +29,15 @@ public class OPC_Controller : MonoBehaviour {
 		AtualizaPorta();
 		AtualizaEndereco ();
 	}
+
+	void FixedUpdate(){
+		if (panelLoginIsActive.activeSelf) {
+			inputfieldEndereco.interactable = true;
+		} else {
+			inputfieldEndereco.interactable = false;
+		}
+	}
+
 
 
 
