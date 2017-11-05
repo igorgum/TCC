@@ -189,4 +189,34 @@ public class DadosFuncio : MonoBehaviour {
 		yield return w;
 		Debug.Log("consegui trocar o avatar, mas falta o resto");
 	}
+
+
+
+
+
+
+
+
+
+
+	public void Deletar(){
+		StartCoroutine ("DeletarPNG");
+		StartCoroutine ("deleteFuncio");
+	}
+
+
+
+	IEnumerator deleteFuncio(){
+		WWW deletando1 = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/insercoes/deletes/funcionario.php"
+			+ "?codigo=" + codigo);
+		yield return deletando1.isDone;
+	}
+
+	IEnumerator DeletarPNG(){
+		WWW deletando2 = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/deleteAvatar.php"
+			+ "?codigo=" + codigo);
+		yield return deletando2.isDone;
+	}
 }

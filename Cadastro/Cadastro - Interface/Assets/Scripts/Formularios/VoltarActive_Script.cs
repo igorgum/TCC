@@ -7,6 +7,7 @@ public class VoltarActive_Script : MonoBehaviour {
 
 	public GameObject ModificarRegistro;
 	public bool inversao;
+	public bool inversaoDeslogar;
 
 	void FixedUpdate(){
 		if (!inversao) {
@@ -16,10 +17,18 @@ public class VoltarActive_Script : MonoBehaviour {
 				gameObject.GetComponent<Button> ().interactable = false;
 			}
 		} else {
-			if (ModificarRegistro.activeSelf) {
-				gameObject.SetActive(false);
+			if (inversaoDeslogar) {
+				if (ModificarRegistro.activeSelf) {
+					gameObject.GetComponent<Button> ().interactable = false;
+				} else {
+					gameObject.GetComponent<Button> ().interactable = true;
+				}
 			} else {
-				gameObject.SetActive(true);
+				if (ModificarRegistro.activeSelf) {
+					gameObject.SetActive (false);
+				} else {
+					gameObject.SetActive (true);
+				}
 			}
 		}
 	}
