@@ -11,6 +11,7 @@ public class EnviarEmail_Script : MonoBehaviour {
 	public GameObject panelCarregando;
 	public GameObject controllerOPC;
 	public GameObject ModificarRegistro;
+	public bool standalone; //para usar sem o FixedUpdate
 
 	public void MandarEmail(){
 		StartCoroutine ("Mandar");
@@ -20,10 +21,13 @@ public class EnviarEmail_Script : MonoBehaviour {
 		//ativar carregando
 		panelCarregando.SetActive(true);
 
+		//deixar campo.email localmente
+		string emailLocal = campoEmail.text;
+
 		//consulta
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
 			+ "/tcc/gerador.php"
-			+ "?email=" + campoEmail.text);
+			+ "?email=" + emailLocal);
 
 		//segura as pontas
 		while (txtConsulta.isDone == false) {
@@ -37,7 +41,7 @@ public class EnviarEmail_Script : MonoBehaviour {
 			Transform[] listaCriancas = panelEnviado.GetComponentsInChildren<Transform>();
 			foreach (Transform filho in listaCriancas) {
 				if (filho.name == "txtRESULTADOEMAIL") {
-					filho.GetComponent<UnityEngine.UI.Text>().text="Email enviado para\n" + "''"+ campoEmail.text + "'' !";
+					filho.GetComponent<UnityEngine.UI.Text>().text="Email enviado para\n" + "''"+ emailLocal + "'' !";
 					panelEnviado.SetActive (true);
 				}
 			}
@@ -45,7 +49,7 @@ public class EnviarEmail_Script : MonoBehaviour {
 			Transform[] listaCriancas = panelEnviado.GetComponentsInChildren<Transform>();
 			foreach (Transform filho in listaCriancas) {
 				if (filho.name == "txtRESULTADOEMAIL") {
-					filho.GetComponent<UnityEngine.UI.Text>().text="Erro no envio para\n" + "''"+ campoEmail.text + "'' !";
+					filho.GetComponent<UnityEngine.UI.Text>().text="Erro no envio para\n" + "''"+ emailLocal + "'' !";
 					panelEnviado.SetActive (true);
 				}
 			}
@@ -66,10 +70,12 @@ public class EnviarEmail_Script : MonoBehaviour {
 
 
 	void FixedUpdate(){
-		if (ModificarRegistro.activeSelf) {
-			gameObject.GetComponent<Button> ().interactable = true;
-		} else {
-			gameObject.GetComponent<Button> ().interactable = false;
+		if (!standalone) {
+			if (ModificarRegistro.activeSelf) {
+				gameObject.GetComponent<Button> ().interactable = true;
+			} else {
+				gameObject.GetComponent<Button> ().interactable = false;
+			}
 		}
 	}
 }

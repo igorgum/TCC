@@ -51,7 +51,10 @@
      <Compile Include="Assets\Scripts\Avatar_script.cs" />
      <Compile Include="Assets\Scripts\BotoesConsulta\btnFuncio_Script.cs" />
      <Compile Include="Assets\Scripts\Formularios\CancelarOque_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\DeletarOque_Script.cs" />
      <Compile Include="Assets\Scripts\Formularios\EnviarEmail_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\ForcarVolta_Script.cs" />
+     <Compile Include="Assets\Scripts\Formularios\LimpaListas_Script.cs" />
      <Compile Include="Assets\Scripts\Formularios\SalvarOque_script.cs" />
      <Compile Include="Assets\Scripts\Formularios\VoltarActive_Script.cs" />
      <Compile Include="Assets\Scripts\Inicializar_script.cs" />
