@@ -17,6 +17,7 @@ public class OPC_Controller : MonoBehaviour {
 
 	public string porta;
 	public string endereco;
+	public bool conectadoPodeLogar = false;
 
 
 	public GameObject Loading;
@@ -56,9 +57,11 @@ public class OPC_Controller : MonoBehaviour {
 		if (w.text == "eaemen") {
 			simCONEXAO.SetActive(true);
 			naoCONEXAO.SetActive(false);
+			conectadoPodeLogar = true;
 		} else {
 			simCONEXAO.SetActive(false);
 			naoCONEXAO.SetActive(true);
+			conectadoPodeLogar = false;
 		}
 
 		Loading.SetActive (false);
