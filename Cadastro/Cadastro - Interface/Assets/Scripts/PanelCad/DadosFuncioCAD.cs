@@ -57,8 +57,12 @@ public class DadosFuncioCAD : MonoBehaviour {
 			yield return v2;
 
 			if (v2.text == "") {
-				//ver se consegue mandar email
-				StartCoroutine ("MandarEmail");
+				////////como achou o email, faz o resto:
+				//decidir se imagem foi alterada, e se for, chama o enviodepng
+				if (!imagemintacta) {/*entao alterou, da upload nela*/
+					StartCoroutine ("EnvioDePNG");
+				}
+				StartCoroutine ("insertfuncio");
 			} else {
 				print (" retornou ");
 				txt_msgCadastro.text = "Erro no cadastro:\nEmail já cadastrado!";
@@ -82,6 +86,7 @@ public class DadosFuncioCAD : MonoBehaviour {
 
 		WWWForm formulario = new WWWForm();
 		formulario.AddField ("VARCd_Funcionario", campoCodigo.text);
+		Debug.Log (campoCodigo.text);
 		formulario.AddField ("VARLogin", campoLogin.text);
 		formulario.AddField ("VARNm_Funcionario", campoNome.text);
 		formulario.AddField ("VAREmail", campoEmail.text);
@@ -90,6 +95,9 @@ public class DadosFuncioCAD : MonoBehaviour {
 		WWW update = new WWW( controllerOPC.GetComponent<OPC_Controller> ().endereco
 			+ "/tcc/insercoes/inserts/funcionario.php", formulario);
 		yield return update;
+
+		//ver se consegue mandar email
+		StartCoroutine ("MandarEmail");
 
 		Loading.SetActive (false);
 	}
@@ -138,13 +146,6 @@ public class DadosFuncioCAD : MonoBehaviour {
 				if (filho.name == "txtRESULTADOEMAIL") {
 					filho.GetComponent<UnityEngine.UI.Text>().text="Email enviado para\n" + "''"+ emailLocal + "'' !";
 					panelEnviado.SetActive (true);
-
-					////////como achou o email, faz o resto:
-					//decidir se imagem foi alterada, e se for, chama o enviodepng
-					if (!imagemintacta) {/*entao alterou, da upload nela*/
-						StartCoroutine ("EnvioDePNG");
-					}
-					StartCoroutine ("insertfuncio");
 				}
 			}
 		} else {
