@@ -9,6 +9,8 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	public GameObject controllerOPC; //pra pegar o endereço da URL
 	public Dropdown dropdownPor;
 	public Transform Content; //esse é o CONTENT do VIEWPORT
+	public Scrollbar viewportResetScrollbar;
+
 	//listar todos os possiveis inputfields
 	public InputField inputfieldNome;
 	public InputField inputfieldEmail;
@@ -93,7 +95,7 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 		StartCoroutine ("PesquisarTudo");
 	}
 	public IEnumerator PesquisarTudo(){
-		Loading.SetActive (false);
+		Loading.SetActive (true);
 		WWW txtConsulta = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
 			+ "/tcc/consultas/funcionario/porNome.php"
 			+ "?nome=");
@@ -135,6 +137,9 @@ public class btnPesquisar_Funcio : MonoBehaviour {
 	//Além de ser chamado internamente,
 	//tambem deve ser chamado pelo DropdownPor OnValueChange
 	public void LimpaContent(){
+		//primeiro reseta a scrollbar vertical
+		viewportResetScrollbar.value = 1;
+
 		foreach (Transform filho in Content) {
 			//print("nome do atual =" + filho.name);
 			if (filho.name == "novobotao" || filho.name == "btnNaoEncontreiNada(Clone)") {

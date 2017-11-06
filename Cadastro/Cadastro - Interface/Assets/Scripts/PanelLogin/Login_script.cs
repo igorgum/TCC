@@ -24,7 +24,12 @@ public class Login_script : MonoBehaviour {
 		Loading.SetActive (true);
 		if (isLoginOk.text != "") {
 			if (isSenhaOk.text != "") {
-				StartCoroutine ("RotinaLogar");
+				if (controllerOPC.GetComponent<OPC_Controller>().conectadoPodeLogar) {
+					StartCoroutine ("RotinaLogar");
+				} else {
+					statusLogin.text = "Erro: O servidor está offline";
+					Loading.SetActive (false);
+				}
 			} else {
 				statusLogin.text = "Erro: O campo senha está vazio";
 				//ou:
