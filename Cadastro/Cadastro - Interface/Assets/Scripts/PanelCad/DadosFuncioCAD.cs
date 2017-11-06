@@ -52,7 +52,7 @@ public class DadosFuncioCAD : MonoBehaviour {
 
 		if (v.text == "") {
 			//ver duplicata de email
-			WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmail.php?email="
+			WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmailExato.php?email="
 				+ campoEmail.text);
 			yield return v2;
 
