@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using System.IO;
+using SFB;
 
 public class FileBrowserPNG : MonoBehaviour {
 
@@ -13,7 +13,16 @@ public class FileBrowserPNG : MonoBehaviour {
 	public int queDados=0;
 
 	public void AbrePainel(){
-		caminho = EditorUtility.OpenFilePanel("Escolha o arquivo a enviar", "", "png");
+		var extensions = new [] {
+			new ExtensionFilter("Imagem PNG", "png" )
+		};
+		string[] caminhos=(StandaloneFileBrowser.OpenFilePanel("Open File", "", extensions, false));
+		if (caminhos.Length > 0 && caminhos.Length < 2) {
+			caminho = caminhos [0];
+		} else {
+			caminho = "";
+		}
+
 		if (caminho != "") {
 			switch (queDados) {
 			case 0: 
