@@ -10,12 +10,22 @@ public class FileBrowserPNG : MonoBehaviour {
 	public string caminho;
 	public bool debugar;
 	public GameObject objController;
+	public int queDados=0;
 
 	public void AbrePainel(){
 		caminho = EditorUtility.OpenFilePanel("Escolha o arquivo a enviar", "", "png");
 		if (caminho != "") {
-			objController.GetComponent<DadosFuncio> ().imagemintacta = false;
-			objController.GetComponent<DadosFuncio> ().caminho = caminho;
+			switch (queDados) {
+			case 0: 
+				objController.GetComponent<DadosFuncio> ().imagemintacta = false;
+				objController.GetComponent<DadosFuncio> ().caminho = caminho;
+				break;
+			case 1:
+				objController.GetComponent<DadosFuncioCAD> ().imagemintacta = false;
+				objController.GetComponent<DadosFuncioCAD> ().caminho = caminho;
+				break;
+			}
+
 			StartCoroutine("PegaImagemDisk");
 
 		}
