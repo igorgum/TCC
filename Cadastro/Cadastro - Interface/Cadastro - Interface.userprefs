@@ -4,7 +4,7 @@
     <Files>
       <File FileName="Assets\Scripts\testeIO.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PanelPrincipal\DropdownController_script.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PanelPrincipal\Dropdowns_script.cs" Line="15" Column="30" />
+      <File FileName="Assets\Scripts\PanelPrincipal\Dropdowns_script.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PanelPrincipal\Deslogar_script.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PanelCons\Modificar_Campos.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Pesquisar\FuncoesRegistradas.cs" Line="1" Column="1" />
@@ -18,9 +18,9 @@
       <File FileName="Assets\Scripts\Formularios\DeletarOque_Script.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Pesquisar\Funcionario\btnPesquisar_Funcio.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PanelCons\FileBrowserPNG.cs" Line="25" Column="69" />
-      <File FileName="Assets\Scripts\PanelCad\DadosFuncioCAD.cs" Line="25" Column="1" />
-      <File FileName="Assets\Scripts\PanelCons\Puxar Dados\DadosFuncio.cs" Line="18" Column="2" />
-      <File FileName="Assets\Scripts\Formularios\EnviarEmail_Script.cs" Line="10" Column="2" />
+      <File FileName="Assets\Scripts\PanelCad\DadosFuncioCAD.cs" Line="65" Column="40" />
+      <File FileName="Assets\Scripts\PanelCons\Puxar Dados\DadosFuncio.cs" Line="188" Column="73" />
+      <File FileName="Assets\Scripts\Formularios\EnviarEmail_Script.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
