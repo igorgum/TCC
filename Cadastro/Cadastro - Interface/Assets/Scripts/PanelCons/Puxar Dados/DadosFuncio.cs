@@ -185,7 +185,7 @@ public class DadosFuncio : MonoBehaviour {
 		//adiciona imagem ao formulario
 		formulario.AddBinaryData("arquivo", bytesDaImg, novoNome,"image/png");
 		//faz upload
-		WWW w = new WWW("http://localhost/tcc/uploadAvatar.php", formulario);
+		WWW w = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/uploadAvatar.php", formulario);
 		yield return w;
 		Debug.Log("consegui trocar o avatar, mas falta o resto");
 	}

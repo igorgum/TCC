@@ -22,7 +22,8 @@ public class DadosFuncioCAD : MonoBehaviour {
 	public bool imagemintacta = true;
 
 	public GameObject panelEnviado; //email enviado
-
+	public GameObject panel_msgCadastro;
+	public Text txt_msgCadastro;
 	public GameObject Loading;
 
 
@@ -34,11 +35,41 @@ public class DadosFuncioCAD : MonoBehaviour {
 	//Em seguida chama o zerar
 	public void Mandar(){
 		Debug.Log ("fui chamado");
-		//ver se consegue mandar email
-		StartCoroutine ("MandarEmail");
+		//vamos ver primeiro se o codigo é duplicado no banco
+		StartCoroutine("VerificaDuplicata");
 	}
 
 
+
+
+
+
+
+	IEnumerator VerificaDuplicata(){
+		WWW v = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porCodigo.php?codigo="
+						+ campoCodigo.text);
+		yield return v;
+
+		if (v.text == "") {
+			//ver duplicata de email
+			WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmail.php?email="
+				+ campoEmail.text);
+			yield return v2;
+
+			if (v2.text == "") {
+				//ver se consegue mandar email
+				StartCoroutine ("MandarEmail");
+			} else {
+				print (" retornou ");
+				txt_msgCadastro.text = "Erro no cadastro:\nEmail já cadastrado!";
+				panel_msgCadastro.SetActive (true);
+			}
+		} else {
+			print (" retornou ");
+			txt_msgCadastro.text = "Erro no cadastro:\nRFID já cadastrado!";
+			panel_msgCadastro.SetActive (true);
+		}
+	}
 
 
 
@@ -76,7 +107,7 @@ public class DadosFuncioCAD : MonoBehaviour {
 		//adiciona imagem ao formulario
 		formulario.AddBinaryData("arquivo", bytesDaImg, novoNome,"image/png");
 		//faz upload
-		WWW w = new WWW("http://localhost/tcc/uploadAvatar.php", formulario);
+		WWW w = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco +"/tcc/uploadAvatar.php", formulario);
 		yield return w;
 		Debug.Log("consegui mandar o avatar, mas falta o resto");
 	}
