@@ -415,7 +415,7 @@ INNER JOIN `periodo` ON `materia`.`Cd_Periodo` = `periodo`.`Cd_Periodo`;
 
 
 
-SELECT funcionario.Cd_Funcionario, funcionario.Login, funcionario.Senha, funcionario.Nm_Funcionario, funcionario.Email, funcionario.Avatar, funcao.Funcao
+SELECT funcionario.Cd_Funcionario, funcionario.Login, funcionario.Senha, funcionario.Nm_Funcionario, funcionario.Email, funcao.Funcao
 from funcionario
 INNER JOIN func_func ON funcionario.Cd_Funcionario = func_func.Cd_Funcionario INNER JOIN funcao ON
 func_func.Cd_Funcao = funcao.Cd_Funcao
