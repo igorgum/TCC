@@ -10,7 +10,7 @@ CREATE TABLE Periodo(
 );
 
 CREATE TABLE Materia(
-	Cd_Materia	CHAR(4) NOT NULL UNIQUE,
+	Cd_Materia	CHAR(8) NOT NULL UNIQUE,
 	Horario		TIME,
 	Materia		VARCHAR(25),
 	Cd_Periodo	CHAR(1) NOT NULL UNIQUE,
@@ -20,7 +20,7 @@ CREATE TABLE Materia(
 );
 
 CREATE TABLE Professor(
-	Cd_Professor 	CHAR(4) NOT NULL UNIQUE,
+	Cd_Professor 	CHAR(8) NOT NULL UNIQUE,
 	Nm_Professor	VARCHAR(50),
 	Email		VARCHAR(50) UNIQUE,
 	
@@ -29,7 +29,7 @@ CREATE TABLE Professor(
 );
 
 CREATE TABLE Aluno(
-	Cd_Aluno	CHAR(4) NOT NULL UNIQUE,
+	Cd_Aluno	CHAR(8) NOT NULL UNIQUE,
 	Nm_Aluno	VARCHAR(50),
 	RA		CHAR(10) NOT NULL UNIQUE,
 	Email		VARCHAR(50),
@@ -39,7 +39,7 @@ CREATE TABLE Aluno(
 );
 
 CREATE TABLE Funcionario(
-	Cd_Funcionario	CHAR(4) NOT NULL UNIQUE,
+	Cd_Funcionario	CHAR(8) NOT NULL UNIQUE,
 	Login		VARCHAR(25) UNIQUE,
 	Senha		VARCHAR(32),
 	Nm_Funcionario	VARCHAR(50),
@@ -50,8 +50,8 @@ CREATE TABLE Funcionario(
 );
 
 CREATE TABLE Prof_Mat(
-	Cd_Materia	CHAR(4) NOT NULL,
-	Cd_Professor	CHAR(4) NOT NULL,
+	Cd_Materia	CHAR(8) NOT NULL,
+	Cd_Professor	CHAR(8) NOT NULL,
 
 	PRIMARY KEY (Cd_Materia, Cd_Professor),
 	FOREIGN KEY (Cd_Materia) REFERENCES Materia(Cd_Materia),
@@ -60,8 +60,8 @@ CREATE TABLE Prof_Mat(
 );
 
 CREATE TABLE Alun_Mat(
-	Cd_Materia	CHAR(4) NOT NULL,
-	Cd_Aluno	CHAR(4) NOT NULL,
+	Cd_Materia	CHAR(8) NOT NULL,
+	Cd_Aluno	CHAR(8) NOT NULL,
 	Matriculado	BOOLEAN,
 	Aprovado	BOOLEAN,
 	Media_Final	FLOAT(10),
@@ -80,9 +80,9 @@ CREATE TABLE Sala(
 
 CREATE TABLE Prof_Reserva (
     Cd_Reserva INTEGER NOT NULL UNIQUE,
-    Cd_Professor CHAR(4) NOT NULL,
+    Cd_Professor CHAR(8) NOT NULL,
     Numero INTEGER NOT NULL,
-    Cd_Funcionario CHAR(4) NOT NULL,
+    Cd_Funcionario CHAR(8) NOT NULL,
     PRIMARY KEY (Cd_Reserva),
     FOREIGN KEY (Cd_Professor)
         REFERENCES Professor (Cd_Professor),
@@ -94,9 +94,9 @@ CREATE TABLE Prof_Reserva (
 
 CREATE TABLE Aluno_Reserva(
 	Cd_Reserva	INTEGER NOT NULL UNIQUE,
-	Cd_Aluno	CHAR(4) NOT NULL,
+	Cd_Aluno	CHAR(8) NOT NULL,
 	Numero		INTEGER NOT NULL,
-	Cd_Funcionario	CHAR(4) NOT NULL,
+	Cd_Funcionario	CHAR(8) NOT NULL,
 
 	PRIMARY KEY (Cd_Reserva),
 	FOREIGN KEY (Cd_Aluno) REFERENCES Aluno(Cd_Aluno),
@@ -109,9 +109,9 @@ CREATE TABLE Aluno_Reserva(
 
 CREATE TABLE Presenca_Al(
 	Alu_Data	TIMESTAMP NOT NULL UNIQUE,
-	Cd_Aluno	CHAR(4) NOT NULL,
+	Cd_Aluno	CHAR(8) NOT NULL,
 	Numero		INTEGER NOT NULL,
-	Cd_Funcionario	CHAR(4) NOT NULL,
+	Cd_Funcionario	CHAR(8) NOT NULL,
 	
 	PRIMARY KEY (Alu_Data),
 	FOREIGN KEY (Cd_Aluno) REFERENCES Aluno(Cd_Aluno),
@@ -121,7 +121,7 @@ CREATE TABLE Presenca_Al(
 
 CREATE TABLE Presenca_Prof(
 	Prof_TimeStamp	TIMESTAMP NOT NULL UNIQUE,
-	Cd_Professor	CHAR(4) NOT NULL,
+	Cd_Professor	CHAR(8) NOT NULL,
 	Numero		INTEGER NOT NULL,
 
 	PRIMARY KEY (Prof_TimeStamp),
@@ -130,15 +130,15 @@ CREATE TABLE Presenca_Prof(
 );
 
 CREATE TABLE Funcao(
-	Cd_Funcao	CHAR(4) NOT NULL UNIQUE,
+	Cd_Funcao	CHAR(8) NOT NULL UNIQUE,
 	Funcao		CHAR(50),
 	
 	PRIMARY KEY (Cd_Funcao)
 );
 
 CREATE TABLE Func_Func(
-	Cd_Funcionario	CHAR(4) NOT NULL UNIQUE,
-	Cd_Funcao	CHAR(4) NOT NULL,
+	Cd_Funcionario	CHAR(8) NOT NULL UNIQUE,
+	Cd_Funcao	CHAR(8) NOT NULL,
 
 	PRIMARY KEY (Cd_Funcionario, Cd_Funcao),
 	FOREIGN KEY (Cd_Funcionario) REFERENCES Funcionario(Cd_Funcionario),
