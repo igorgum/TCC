@@ -58,12 +58,22 @@ public class Login_script : MonoBehaviour {
 			+ "&senha=" + senha);
 		yield return txtConsulta;
 
+		WWW consultaConfirmado = new WWW (controllerOPC.GetComponent<OPC_Controller>().endereco
+			+ "/tcc/login/EmailConfirmado.php"
+			+ "?login=" + login);
+		yield return consultaConfirmado;
+
 		if (txtConsulta.text != "|") {
-			conectadoComo.text = "Usuário conectado como\n" + txtConsulta.text;
-			//limpando/ativando telas
-			statusLogin.text = "";
-			painelLogin.SetActive (false);
-			painelPrincipal.SetActive (true);
+			if (consultaConfirmado.text == "1") {
+				conectadoComo.text = "Usuário conectado como\n" + txtConsulta.text;
+				//limpando/ativando telas
+				statusLogin.text = "";
+				painelLogin.SetActive (false);
+				painelPrincipal.SetActive (true);
+			} else {
+				statusLogin.text = "Erro: Cadastro não finalizado";
+			}
+
 		} else {
 			statusLogin.text = "Erro: Falha na autenticação";
 		}
