@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Anim\Rotate_anim.cs" />
      <Compile Include="Assets\Scripts\Anim\Size_anim.cs" />
      <Compile Include="Assets\Scripts\Avatar_script.cs" />
+     <Compile Include="Assets\Scripts\BlockCamposFuncao.cs" />
      <Compile Include="Assets\Scripts\BotoesConsulta\btnFuncio_Script.cs" />
      <Compile Include="Assets\Scripts\Formularios\Cad_OnAwake_Script.cs" />
      <Compile Include="Assets\Scripts\Formularios\CancelarOque_Script.cs" />
