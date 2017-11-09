@@ -55,13 +55,13 @@ public class DadosFuncioCAD : MonoBehaviour {
 				+ campoLogin.text);
 			yield return v1;
 
-			if (v1.text == "") {
+			if (v1.text == "" || campoLogin.text=="") {
 				//ver duplicata de email
 				WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmailExato.php?email="
 					+ campoEmail.text);
 				yield return v2;
 
-				if (v2.text == "") {
+				if (v2.text == "" || campoEmail.text=="") {
 					////////como achou o email, faz o resto:
 					//decidir se imagem foi alterada, e se for, chama o enviodepng
 					if (!imagemintacta) {/*entao alterou, da upload nela*/
@@ -107,7 +107,9 @@ public class DadosFuncioCAD : MonoBehaviour {
 		yield return update;
 
 		//ver se consegue mandar email
-		StartCoroutine ("MandarEmail");
+		if (campoEmail.text != "") {
+			StartCoroutine ("MandarEmail");
+		}
 
 		Loading.SetActive (false);
 	}
