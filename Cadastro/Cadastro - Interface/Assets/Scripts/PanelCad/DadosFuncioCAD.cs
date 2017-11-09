@@ -51,21 +51,31 @@ public class DadosFuncioCAD : MonoBehaviour {
 		yield return v;
 
 		if (v.text == "") {
-			//ver duplicata de email
-			WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmailExato.php?email="
-				+ campoEmail.text);
-			yield return v2;
+			WWW v1 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porLoginExato.php?login="
+				+ campoLogin.text);
+			yield return v1;
 
-			if (v2.text == "") {
-				////////como achou o email, faz o resto:
-				//decidir se imagem foi alterada, e se for, chama o enviodepng
-				if (!imagemintacta) {/*entao alterou, da upload nela*/
-					StartCoroutine ("EnvioDePNG");
+			if (v1.text == "") {
+				//ver duplicata de email
+				WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmailExato.php?email="
+					+ campoEmail.text);
+				yield return v2;
+
+				if (v2.text == "") {
+					////////como achou o email, faz o resto:
+					//decidir se imagem foi alterada, e se for, chama o enviodepng
+					if (!imagemintacta) {/*entao alterou, da upload nela*/
+						StartCoroutine ("EnvioDePNG");
+					}
+					StartCoroutine ("insertfuncio");
+				} else {
+					print (" retornou ");
+					txt_msgCadastro.text = "Erro no cadastro:\nEmail já cadastrado!";
+					panel_msgCadastro.SetActive (true);
 				}
-				StartCoroutine ("insertfuncio");
 			} else {
 				print (" retornou ");
-				txt_msgCadastro.text = "Erro no cadastro:\nEmail já cadastrado!";
+				txt_msgCadastro.text = "Erro no cadastro:\nLogin já cadastrado!";
 				panel_msgCadastro.SetActive (true);
 			}
 		} else {

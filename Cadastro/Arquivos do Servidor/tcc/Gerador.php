@@ -3,7 +3,10 @@ $senha=$_GET['email'];
 $senhaenc = base64_encode($senha);
 $senhaenc = $senhaenc . 'sPr';
 $usermail = $_GET['email'];
-$link = "http://187.21.124.155:4000/tcc/formulario.php?cx=$senhaenc";
+//alteracao do link
+$localIP = getHostByName(getHostName());
+$link = "http://$localIP:4000/tcc/formulario.php?cx=$senhaenc";
+//fim alteracao do link
 // sql stuff
 $servername = "localhost";
 $username = "root";
