@@ -37,7 +37,7 @@ public class EnviarEmail_Script : MonoBehaviour {
 		//split
 		String[] listaDeSubstrings = txtConsulta.text.Split(';');
 
-		if (listaDeSubstrings.Length > 2 && listaDeSubstrings [1] == "kkeaemen") {
+		if (listaDeSubstrings.Length > 2 && listaDeSubstrings [1] == "kkeaemen" && !txtConsulta.text.Contains ("<title>404 Not Found</title>")) {
 			Transform[] listaCriancas = panelEnviado.GetComponentsInChildren<Transform>();
 			foreach (Transform filho in listaCriancas) {
 				if (filho.name == "txtRESULTADOEMAIL") {

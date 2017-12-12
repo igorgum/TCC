@@ -210,7 +210,7 @@ INSERT INTO `tcc`.`funcao`
 (`Cd_Funcao`,
 `Funcao`)
 VALUES
-(1,
+(3,
 'Limpeza');
 
 INSERT INTO `tcc`.`funcao`
@@ -224,7 +224,7 @@ INSERT INTO `tcc`.`funcao`
 (`Cd_Funcao`,
 `Funcao`)
 VALUES
-(3,
+(1,
 'Administracao');
 
 

@@ -46,20 +46,37 @@ public class DadosFuncioCAD : MonoBehaviour {
 
 
 	IEnumerator VerificaDuplicata(){
+		Loading.SetActive (true);
+
 		WWW v = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porCodigo.php?codigo="
 						+ campoCodigo.text);
 		yield return v;
 
+		Loading.SetActive (false);
+
+		//debug1
+		Debug.Log("campoCodigo.text="+campoCodigo.text);
+		Debug.Log("v.text="+v.text);
+		//end debug
+
 		if (v.text == "") {
+			Loading.SetActive (true);
+
 			WWW v1 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porLoginExato.php?login="
 				+ campoLogin.text);
 			yield return v1;
 
+			Loading.SetActive (false);
+
 			if (v1.text == "" || campoLogin.text=="") {
 				//ver duplicata de email
+
+				Loading.SetActive (true);
 				WWW v2 = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco+"/tcc/consultas/funcionario/porEmailExato.php?email="
 					+ campoEmail.text);
 				yield return v2;
+
+				Loading.SetActive (false);
 
 				if (v2.text == "" || campoEmail.text=="") {
 					////////como achou o email, faz o resto:
@@ -108,7 +125,12 @@ public class DadosFuncioCAD : MonoBehaviour {
 
 		//ver se consegue mandar email
 		if (campoEmail.text != "") {
+			Debug.Log ("nao entrei no else");
 			StartCoroutine ("MandarEmail");
+		} else {
+			Debug.Log ("entrei no else");
+			txt_msgCadastro.text = "Cadastro realizado\ncom sucesso!";
+			panel_msgCadastro.SetActive (true);
 		}
 
 		Loading.SetActive (false);
@@ -117,7 +139,7 @@ public class DadosFuncioCAD : MonoBehaviour {
 
 	IEnumerator EnvioDePNG(){
 		//string caminho = objAvatar.GetComponent<FileBrowserPNG> ().caminho;
-
+		Loading.SetActive (true);
 		//instacia o formulario
 		WWWForm formulario = new WWWForm();
 		//novo nome da imagem (dps faz o algoritmo de selecionar primeironome)
@@ -130,6 +152,7 @@ public class DadosFuncioCAD : MonoBehaviour {
 		WWW w = new WWW(controllerOPC.GetComponent<OPC_Controller>().endereco +"/tcc/uploadAvatar.php", formulario);
 		yield return w;
 		Debug.Log("consegui mandar o avatar, mas falta o resto");
+		Loading.SetActive (false);
 	}
 
 	IEnumerator MandarEmail(){
