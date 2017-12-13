@@ -36,7 +36,8 @@ public class Avatar_script : MonoBehaviour {
 			+ "?login=" + login);
 		yield return txtConsulta;
 
-		if (txtConsulta.text == null || txtConsulta.text == "") {
+		if (txtConsulta.text == null || txtConsulta.text == "" || txtConsulta.text.Contains ("<title>404 Not Found</title>") || txtConsulta.text.Contains ("class='xdebug-error xe-warning'")) {
+			Debug.Log ("nao consegui alcancar o ip");
 			url = null;
 			imagem.texture = padrao;
 			imagem2.texture = padrao;
@@ -46,6 +47,7 @@ public class Avatar_script : MonoBehaviour {
 
 		String[] listaDeSubstrings = txtConsulta.text.Split('|');
 
+		Debug.Log ("conteudo de consulta="+txtConsulta.text);
 		if (inputfieldLogin.text.Equals (listaDeSubstrings[1])) {
 			url = listaDeSubstrings [0];
 			imagem = this.gameObject.GetComponent<RawImage> ();
