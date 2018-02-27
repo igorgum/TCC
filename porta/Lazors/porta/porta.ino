@@ -58,8 +58,11 @@
    SPI MOSI    MOSI         11 / ICSP-4   51        D11        ICSP-4           16
    SPI MISO    MISO         12 / ICSP-1   50        D12        ICSP-1           14
    SPI SCK     SCK          13 / ICSP-3   52        D13        ICSP-3           15
+   LED0        ***          A0
+   LED1        ***          A1
+   
 */
-
+#include "remap.h"      // WEMOS D1 Pin remap
 #include <EEPROM.h>     // We are going to read and write PICC's UIDs from/to EEPROM
 #include <SPI.h>        // RC522 Module uses SPI protocol
 #include <MFRC522.h>  // Library for Mifare RC522 Devices
@@ -89,11 +92,11 @@
 #define LED_OFF LOW
 #endif
 
-constexpr uint8_t redLed = 7;   // Set Led Pins
-constexpr uint8_t greenLed = 6;
-constexpr uint8_t blueLed = 5;
+constexpr uint8_t redLed = D5;   // Set Led Pins
+constexpr uint8_t greenLed = D4;
+constexpr uint8_t blueLed = D3;
 
-constexpr uint8_t relay = 4;     // Set Relay Pin
+constexpr uint8_t relay = D0;     // Set Relay Pin
 
 
 uint8_t successRead;    // Variable integer to keep if we have Successful Read from Reader
@@ -103,8 +106,8 @@ byte readCard[4];   // Stores scanned ID read from RFID Module
 
 
 // Create MFRC522 instance.
-constexpr uint8_t RST_PIN = 9;     // Configurable, see typical pin layout above
-constexpr uint8_t SS_PIN = 10;     // Configurable, see typical pin layout above
+constexpr uint8_t RST_PIN = D7;     // Configurable, see typical pin layout above
+constexpr uint8_t SS_PIN = 15;     // Configurable, see typical pin layout above
 
 // String
 String Ativa;
@@ -114,9 +117,28 @@ String Ativa;
 boolean leu;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
+//////////////////////////////////// Lazors stuff ////////////////////////////////////////////////
+
+
+const int pResistor1 = A0; // Photoresistor analog pin A0
+const int pResistor2 = A0; // Photoresistor analog pin A0    MULTIPLEXAR
+
+int value1;
+int value2;
+int pessoas;
+String oi;
+bool passo1, passo2, block1 = false;
+
 
 ///////////////////////////////////////// Setup ///////////////////////////////////
 void setup() {
+  
+  // more lazor stuff
+  Serial.begin(9600);
+  Serial.println("setup Iniciado");
+  pinMode(pResistor1, INPUT);// Set pResistor1 - A0 pin as an input
+  pinMode(pResistor2, INPUT);// Set pResistor2 - A1 pin as an input
+  
   //Arduino Pin Configuration
   pinMode(redLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
@@ -129,7 +151,6 @@ void setup() {
   digitalWrite(blueLed, LED_OFF); // Make sure led is off
 
   //Protocol Configuration
-  Serial.begin(9600);  // Initialize serial communications with PC
   SPI.begin();           // MFRC522 Hardware uses SPI protocol
   mfrc522.PCD_Init();    // Initialize MFRC522 Hardware
 
@@ -137,6 +158,7 @@ void setup() {
   //mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);
 
   cycleLeds();    // Everything ready lets give user some feedback by cycling leds
+  Serial.println("setup completo");
 }
 
 
@@ -150,24 +172,27 @@ void loop () {
   // getID()
   //
   //
+  // verifica lazors
+  //verifica();
   //
-  //
-  if (Serial.available()) {
-    Serial.flush();
-    if (leu) {
+    if (leu == true) {
       leu = !leu;
     };
+    Serial.flush();
+    if(Serial.available() > 0){
     Ativa = Serial.readString();
+    Serial.print(Ativa);
     if (Ativa == "Ativa;") {
       while (leu == false) {
-        leu = getID();            // sets successRead to true when we get read from reader otherwise false
-        digitalWrite(blueLed, LED_ON);    // Visualize Master Card need to be defined
+        leu = getID();            // sets to true when we get read from reader otherwise false
+        digitalWrite(blueLed, LED_ON);    
         delay(200);
         digitalWrite(blueLed, LED_OFF);
         delay(200);
         if (leu == true) {
           Ativa = " ";
         } else {
+          Serial.print("cai no logging");
           //LOGGING
         }
       }
@@ -181,7 +206,7 @@ void loop () {
       digitalWrite(redLed, LED_ON);  // Turn on red LED
       digitalWrite(greenLed, LED_OFF);   // Turn off green LED
     }
-  }
+    }
 }
 
 
@@ -278,3 +303,112 @@ void normalModeOn () {
   digitalWrite(greenLed, LED_OFF);  // Make sure Green LED is off
   digitalWrite(relay, HIGH);    // Make sure Door is Locked
 }
+
+
+
+
+
+//////////////////////////////// Lazor stuff ///////////////////////////////////////////////
+bool breack1() {
+  value1 = analogRead(pResistor1);
+  if (value1 < 800)
+  {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool breack2() {
+  value2 = analogRead(pResistor2);
+  if (value2 < 800) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool block() {
+  if (breack1() == false && breack2() == false) {
+    return false;
+  } else {
+    return true;
+  }
+
+}
+
+
+void verifica() {
+
+
+
+  if (breack1() == true && breack2() == true) {
+      //Seriel/print("lazers bloqueados");
+    
+  }
+
+
+
+  if (passo1 == true && passo2 == true) {
+    passo1 = false;
+    passo2 = false;
+  }
+
+
+
+  // começa a verificar o passo 1
+  if (breack1() == true && breack2() == false && passo2 == false && block1 == false) {
+    passo1 = true;
+    passo2 = false;
+    block1 = true;
+  }
+
+
+
+
+  // começa a verificar o passo 2
+  if (breack2() == true && breack1() == false && passo1 == false && block1 == false) {
+    passo2 = true;
+    passo1 = false;
+    block1 = true;
+  }
+
+
+
+  //termina de verificar o passo1
+  if (breack2() == true && passo1 == true) {
+    Serial.print("Entrou");
+    pessoas++;
+    // aqui faz a contagem, todos os tratamentos envolvendo a quantidade de pessoas na sala devem ser feitas aqui.
+    passo1 = false;
+    passo2 = false;
+  }
+
+  //termina de verificar o passo2
+  if (breack1() == true && passo2 == true) {
+    Serial.print("Saiu");
+    if (pessoas > 0){    // decrementa a quantidade de pessoas, supostamente deve evitar que tenha menos de 0 pessoas.
+    pessoas--;
+    passo1 = false;
+    passo2 = false;
+    }else
+    {
+      Serial.print("Algo de errado n esta certo");     // caso tenha 0 ou menos pessoas na sala e alguem sai.
+    }
+  }
+
+
+ //verifica lazors
+    if (breack1() == false && breack2() == false) {
+    block1 = false;
+  }else{
+    block1 = true;
+  }
+
+  oi = Serial.readString();
+  if(oi == "oi;"){
+    Serial.print(pessoas,DEC);
+    Serial.print(";");
+    }
+}
+
